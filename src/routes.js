@@ -12,6 +12,9 @@ import DashboardAppPage from './pages/DashboardAppPage';
 import Citas from './sections/app/citas/Citas';
 import TipoUsuarioPage from './sections/app/tipo-usuario/pages/TipoUsuarioPage';
 import UsuarioPage from './sections/app/usuario/pages/usuarioPage';
+import ClientePage from './sections/app/clientes/pages/ClientePage';
+import ProductoPage from './sections/app/producto/pages/ProductoPage'
+import TipoSoportePage from './sections/app/tipo-soporte/pages/TipoSoportePage';
 
 // ----------------------------------------------------------------------
 
@@ -29,6 +32,9 @@ export default function Router() {
         { path: 'citas', element: <Citas /> },
         { path: 'tipousuario', element: <TipoUsuarioPage /> },
         { path: 'usuario', element: <UsuarioPage /> },
+        { path: 'cliente', element: <ClientePage /> },
+        { path: 'producto', element: <ProductoPage /> },
+        { path: 'tiposoporte', element: <TipoSoportePage /> },
       ],
     },
     {

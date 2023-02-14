@@ -8,7 +8,7 @@ import { IconoDataGrid } from '../../../../components/app/IconoDatagrid';
 import { BotonGrabar, BotonNuevo } from '../../../../components/app/Botones';
 // import useTipoUsuarioForm from '../hooks/useTipoUsuarioForm';
 
-function ClientePage() {
+function ProductoPage() {
   //   const {
   //     formulario,
   //     descripcionRef,
@@ -69,85 +69,19 @@ function ClientePage() {
     <Transicion>
       <Grid container spacing={1}>
         <Grid item xs={12}>
-          <Typography variant="h4">Cliente</Typography>
+          <Typography variant="h4">Producto</Typography>
         </Grid>
         <Grid item xs={12}>
           <Divider>
             <Chip label="Formulario" />
           </Divider>
         </Grid>
-        <Grid item xs={12} sm={5} md={4}>
-          <TextField
-            // inputRef={descripcionRef}
-            fullWidth
-            size="small"
-            label="Razon social"
-            variant="filled"
-            // value={formulario.descripcion}
-            // onChange={(e) => cambiarDescripcion(e)}
-          />
-        </Grid>
-        <Grid item xs={12} sm={5} md={2}>
-          <TextField
-            // inputRef={descripcionRef}
-            fullWidth
-            size="small"
-            label="Identificacion"
-            variant="filled"
-            // value={formulario.descripcion}
-            // onChange={(e) => cambiarDescripcion(e)}
-          />
-        </Grid>
-        <Grid item xs={12} sm={5} md={2}>
-          <TextField
-            // inputRef={descripcionRef}
-            fullWidth
-            size="small"
-            label="Telefono"
-            variant="filled"
-            // value={formulario.descripcion}
-            // onChange={(e) => cambiarDescripcion(e)}
-          />
-        </Grid>
-        <Grid item xs={12} sm={5} md={2}>
-          <TextField
-            // inputRef={descripcionRef}
-            fullWidth
-            size="small"
-            label="Celular"
-            variant="filled"
-            // value={formulario.descripcion}
-            // onChange={(e) => cambiarDescripcion(e)}
-          />
-        </Grid>
-        <Grid item xs={12} sm={5} md={2}>
-          <TextField
-            // inputRef={descripcionRef}
-            fullWidth
-            size="small"
-            label="Correo"
-            variant="filled"
-            // value={formulario.descripcion}
-            // onChange={(e) => cambiarDescripcion(e)}
-          />
-        </Grid>
         <Grid item xs={12} sm={5} md={3}>
           <TextField
             // inputRef={descripcionRef}
             fullWidth
             size="small"
-            label="Direccion"
-            variant="filled"
-            // value={formulario.descripcion}
-            // onChange={(e) => cambiarDescripcion(e)}
-          />
-        </Grid>
-        <Grid item xs={12} sm={5} md={3}>
-          <TextField
-            // inputRef={descripcionRef}
-            fullWidth
-            size="small"
-            label="Coordenadas"
+            label="Descripcion"
             variant="filled"
             // value={formulario.descripcion}
             // onChange={(e) => cambiarDescripcion(e)}
@@ -202,4 +136,4 @@ function ClientePage() {
   );
 }
 
-export default ClientePage;
+export default ProductoPage;

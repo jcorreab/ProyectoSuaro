@@ -23,17 +23,17 @@ const navConfig = [
   },
   {
     title: 'Clientes',
-    path: '/dashboard/a',
+    path: '/dashboard/cliente',
     icon: icon('ic_cliente'),
   },
   {
     title: 'Productos',
-    path: '/dashboard/b',
+    path: '/dashboard/producto',
     icon: icon('ic_item'),
   },
   {
     title: 'Tipos Soportes',
-    path: '/dashboard/c',
+    path: '/dashboard/tiposoporte',
     icon: icon('ic_tipo_soporte'),
   },
   {
