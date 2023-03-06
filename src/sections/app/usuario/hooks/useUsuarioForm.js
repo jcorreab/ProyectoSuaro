@@ -3,8 +3,10 @@ import useUsuario from '../../../../hooks/app/useUsuario';
 import useTipoUsuario from '../../../../hooks/app/useTipoUsuario';
 import useMensaje from '../../../../hooks/app/useMensaje';
 import * as servicio from '../services/usuarioServicesInt';
+import useError from '../../../../hooks/app/useError';
 
 const useUsuarioForm = () => {
+  const { errorHttp } = useError();
   const { listaUsuario, listaUsuarioCopia, setListaUsuario, listarUsuarioApi } = useUsuario();
   const { listaTipoUsuario } = useTipoUsuario();
   const { mensajeSistema } = useMensaje();
@@ -86,7 +88,13 @@ const useUsuarioForm = () => {
         nuevo();
         listarUsuarioApi();
       })
-      .catch()
+      .catch((error) =>
+        errorHttp({
+          mensaje:
+            'Error al registrar el usuario, revise si la identificacion o el codigo de usuario se encuentran registradas',
+          error,
+        })
+      )
       .finally();
   };
   const editarRegistro = () => {
@@ -102,7 +110,13 @@ const useUsuarioForm = () => {
         });
         listarUsuarioApi();
       })
-      .catch()
+      .catch((error) =>
+        errorHttp({
+          mensaje:
+            'Error al editar el usuario, revise si la identificacion o el codigo de usuario se encuentran registradas',
+          error,
+        })
+      )
       .finally();
   };
   const obtenerRegistro = (e) => {
@@ -111,24 +125,94 @@ const useUsuarioForm = () => {
       .then((res) => {
         setFormulario(res);
       })
-      .catch()
+      .catch((error) =>
+        errorHttp({
+          mensaje: 'Error al obtener el registro del usuario',
+          error,
+        })
+      )
       .finally();
   };
   const validar = () => {
-    if (formulario.descripcion.trim().length === 0) {
+    if (formulario.codigo_usuario.trim().length === 0) {
       mensajeSistema({
-        texto: `La descripcion es requerida`,
+        texto: `El Codigo del usuario es requerido`,
         variante: 'warning',
       });
       codigoUsuarioRef.current.focus();
       return true;
     }
+    if (formulario.nombres.trim().length === 0) {
+      mensajeSistema({
+        texto: `Los nombres del usuario son requeridos`,
+        variante: 'warning',
+      });
+      nombresRef.current.focus();
+      return true;
+    }
+    if (formulario.apellidos.trim().length === 0) {
+      mensajeSistema({
+        texto: `Los apellidos del usuario son requeridos`,
+        variante: 'warning',
+      });
+      apellidosRef.current.focus();
+      return true;
+    }
+    if (formulario.identificacion.trim().length === 0) {
+      mensajeSistema({
+        texto: `La identificacion del usuario es requerida`,
+        variante: 'warning',
+      });
+      identifacacionRef.current.focus();
+      return true;
+    }
+    if (formulario.identificacion.trim().length < 10) {
+      mensajeSistema({
+        texto: `La identificacion del usuario debe tener diez digitos`,
+        variante: 'warning',
+      });
+      identifacacionRef.current.focus();
+      return true;
+    }
+    if (formulario.celular.trim().length === 0) {
+      mensajeSistema({
+        texto: `El celular del usuario es requerido`,
+        variante: 'warning',
+      });
+      celularRef.current.focus();
+      return true;
+    }
+
+    if (formulario.celular.trim().length < 10) {
+      mensajeSistema({
+        texto: `El celular del usuario debe tener diez digitos`,
+        variante: 'warning',
+      });
+      celularRef.current.focus();
+      return true;
+    }
+    if (formulario.correo.trim().length === 0) {
+      mensajeSistema({
+        texto: `El correo del usuario es requerido`,
+        variante: 'warning',
+      });
+      correoRef.current.focus();
+      return true;
+    }
+    if (formulario.clave.trim().length === 0) {
+      mensajeSistema({
+        texto: `La Clave del usuario es requerida`,
+        variante: 'warning',
+      });
+      claveRef.current.focus();
+      return true;
+    }
     return false;
   };
   const grabar = () => {
-    // if (validar()) {
-    //   return;
-    // }
+    if (validar()) {
+      return;
+    }
     // NUEVO
     if (String(formulario.codigo).trim().length === 0) {
       agregarRegistro();

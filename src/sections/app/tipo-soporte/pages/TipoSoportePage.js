@@ -6,21 +6,22 @@ import Transicion from '../../../../components/app/Transicion';
 import { estiloTabla, estiloDatagrid, estiloActivo, estiloInactivo } from '../../../../theme/app/Estilos';
 import { IconoDataGrid } from '../../../../components/app/IconoDatagrid';
 import { BotonGrabar, BotonNuevo } from '../../../../components/app/Botones';
+import useTipoSoporteForm from '../hooks/useTipoSoporteForm';
 // import useTipoUsuarioForm from '../hooks/useTipoUsuarioForm';
 
 function TipoSoportePage() {
-  //   const {
-  //     formulario,
-  //     descripcionRef,
-  //     listaTipoUsuario,
-  //     buscar,
-  //     obtenerRegistro,
-  //     cambiarDescripcion,
-  //     cambiarEstado,
-  //     cambiarBusqueda,
-  //     nuevo,
-  //     grabar,
-  //   } = useTipoUsuarioForm();
+  const {
+    formulario,
+    descripcionRef,
+    listaTipoSoporte,
+    buscar,
+    obtenerRegistro,
+    cambiarDescripcion,
+    cambiarEstado,
+    cambiarBusqueda,
+    nuevo,
+    grabar,
+  } = useTipoSoporteForm();
   const cabecera = [
     // { field: 'codigo', headerName: 'Codigo', width: 130 },
     { field: 'descripcion', headerName: 'Descripcion', width: 300 },
@@ -78,29 +79,32 @@ function TipoSoportePage() {
         </Grid>
         <Grid item xs={12} sm={5} md={3}>
           <TextField
-            // inputRef={descripcionRef}
+            inputRef={descripcionRef}
             fullWidth
             size="small"
             label="Descripcion"
             variant="filled"
-            // value={formulario.descripcion}
-            // onChange={(e) => cambiarDescripcion(e)}
+            value={formulario.descripcion}
+            onChange={(e) => cambiarDescripcion(e)}
           />
         </Grid>
         <Grid item xs={12} sm={2} md={1}>
-          <FormControlLabel control={<Checkbox checked />} label="Estado" />
+          <FormControlLabel
+            control={<Checkbox checked={formulario.estado} onChange={(e) => cambiarEstado(e)} />}
+            label="Estado"
+          />
         </Grid>
         <Grid item xs={12} sm={2} md={2}>
           <BotonGrabar
             propiedades={{
-              onClick: () => {},
+              onClick: () => grabar(),
             }}
           />
         </Grid>
         <Grid item xs={12} sm={2} md={2}>
           <BotonNuevo
             propiedades={{
-              onClick: () => {},
+              onClick: () => nuevo(),
             }}
           />
         </Grid>
@@ -110,7 +114,14 @@ function TipoSoportePage() {
           </Divider>
         </Grid>
         <Grid item xs={12} sm={7} md={5}>
-          <TextField fullWidth size="small" label="Buscar" variant="filled" />
+          <TextField
+            fullWidth
+            size="small"
+            label="Buscar"
+            variant="filled"
+            value={buscar}
+            onChange={(e) => cambiarBusqueda(e)}
+          />
         </Grid>
         <Grid item xs={12}>
           <Box sx={estiloTabla}>
@@ -123,9 +134,9 @@ function TipoSoportePage() {
                 components={{
                   NoRowsOverlay: IconoDataGrid,
                 }}
-                // onRowClick={(e) => obtenerRegistro(e)}
+                onRowClick={(e) => obtenerRegistro(e)}
                 columns={cabecera}
-                rows={[]}
+                rows={listaTipoSoporte}
                 getRowId={(rows) => rows.codigo}
               />
             </div>

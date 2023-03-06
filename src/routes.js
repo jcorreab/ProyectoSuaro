@@ -15,6 +15,7 @@ import UsuarioPage from './sections/app/usuario/pages/usuarioPage';
 import ClientePage from './sections/app/clientes/pages/ClientePage';
 import ProductoPage from './sections/app/producto/pages/ProductoPage'
 import TipoSoportePage from './sections/app/tipo-soporte/pages/TipoSoportePage';
+import SoportePage from './sections/app/soporte/pages/SoportePage';
 
 // ----------------------------------------------------------------------
 
@@ -35,6 +36,7 @@ export default function Router() {
         { path: 'cliente', element: <ClientePage /> },
         { path: 'producto', element: <ProductoPage /> },
         { path: 'tiposoporte', element: <TipoSoportePage /> },
+        { path: 'soporte', element: <SoportePage /> },
       ],
     },
     {

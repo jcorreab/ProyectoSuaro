@@ -1,9 +1,11 @@
 import { useState, useRef } from 'react';
+import useError from '../../../../hooks/app/useError';
 import useMensaje from '../../../../hooks/app/useMensaje';
 import useTipoUsuario from '../../../../hooks/app/useTipoUsuario';
 import * as servicio from '../services/tipoUsuarioServicesInt';
 
 const useTipoUsuarioForm = () => {
+  const { errorHttp } = useError();
   const { listaTipoUsuario, listaTipoUsuarioCopia, setListaTipoUsuario, listarTipoUsuarioApi } = useTipoUsuario();
   const { mensajeSistema } = useMensaje();
   const [formulario, setFormulario] = useState({
@@ -44,7 +46,7 @@ const useTipoUsuarioForm = () => {
         nuevo();
         listarTipoUsuarioApi();
       })
-      .catch()
+      .catch((error) => errorHttp({ mensaje: 'Error al momento de grabar', error }))
       .finally();
   };
   const editarRegistro = () => {
@@ -60,7 +62,7 @@ const useTipoUsuarioForm = () => {
         });
         listarTipoUsuarioApi();
       })
-      .catch()
+      .catch((error) => errorHttp({ mensaje: 'Error al momento de editar', error }))
       .finally();
   };
   const obtenerRegistro = (e) => {
@@ -69,7 +71,7 @@ const useTipoUsuarioForm = () => {
       .then((res) => {
         setFormulario(res);
       })
-      .catch()
+      .catch((error) => errorHttp({ mensaje: 'Error al momento de obtener el registro', error }))
       .finally();
   };
   const grabar = () => {
