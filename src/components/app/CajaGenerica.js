@@ -86,6 +86,7 @@ function CajaGenerica(props) {
         <Grid item md={4} sm={4} xs={12}>
           <TextField
             inputRef={inputRef}
+            variant="filled"
             fullWidth
             size="small"
             disabled={desactivarBusqueda}
@@ -122,7 +123,14 @@ function CajaGenerica(props) {
           />
         </Grid>
         <Grid item md={8} sm={8} xs={12}>
-          <TextField disabled fullWidth size="small" label={tituloTexto.descripcion} value={formulario.nombre} />
+          <TextField
+            disabled
+            fullWidth
+            size="small"
+            variant="filled"
+            label={tituloTexto.descripcion}
+            value={formulario.nombre}
+          />
         </Grid>
       </Grid>
     </>

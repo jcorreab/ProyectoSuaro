@@ -1,29 +1,63 @@
-import { Grid, TextField, Button, Box, FormControlLabel, Checkbox, Typography, Divider, Chip } from '@mui/material';
+import {
+  Grid,
+  TextField,
+  Button,
+  Box,
+  FormControlLabel,
+  Checkbox,
+  Typography,
+  Divider,
+  Chip,
+  MenuItem,
+} from '@mui/material';
 import { DataGrid, esES } from '@mui/x-data-grid';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 // import ModeEditOutlineRoundedIcon from '@mui/icons-material/ModeEditOutlineRounded';
 // import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
 import Transicion from '../../../../components/app/Transicion';
 import { estiloTabla, estiloDatagrid, estiloActivo, estiloInactivo } from '../../../../theme/app/Estilos';
 import { IconoDataGrid } from '../../../../components/app/IconoDatagrid';
 import { BotonGrabar, BotonNuevo } from '../../../../components/app/Botones';
-// import useTipoUsuarioForm from '../hooks/useTipoUsuarioForm';
+import useUsuarioForm from '../hooks/useUsuarioForm';
 
 function UsuarioPage() {
-//   const {
-//     formulario,
-//     descripcionRef,
-//     listaTipoUsuario,
-//     buscar,
-//     obtenerRegistro,
-//     cambiarDescripcion,
-//     cambiarEstado,
-//     cambiarBusqueda,
-//     nuevo,
-//     grabar,
-//   } = useTipoUsuarioForm();
+  const {
+    listaUsuario,
+    listaTipoUsuario,
+    formulario,
+    buscar,
+    nombresRef,
+    codigoUsuarioRef,
+    apellidosRef,
+    identifacacionRef,
+    celularRef,
+    correoRef,
+    claveRef,
+    cambiarCodigoUsuario,
+    cambiarNombres,
+    cambiarApellidos,
+    cambiarTipoUsuario,
+    cambiarIdentificacion,
+    cambiarCelular,
+    cambiarCorreo,
+    cambiarObservacion,
+    cambiarFechaIngreso,
+    cambiarClave,
+    cambiarEstado,
+    cambiarBusqueda,
+    nuevo,
+    obtenerRegistro,
+    grabar,
+  } = useUsuarioForm();
   const cabecera = [
     // { field: 'codigo', headerName: 'Codigo', width: 130 },
-    { field: 'descripcion', headerName: 'Descripcion', width: 300 },
+    { field: 'nombres', headerName: 'Nombres', width: 200 },
+    { field: 'apellidos', headerName: 'Apellidos', width: 200 },
+    { field: 'identificacion', headerName: 'Identificacion', width: 150 },
+    { field: 'celular', headerName: 'Celular', width: 150 },
+    { field: 'correo', headerName: 'Correo', width: 200 },
     {
       field: 'estado',
       headerName: 'Estado',
@@ -39,31 +73,6 @@ function UsuarioPage() {
           </Button>
         ),
     },
-
-    // {
-    //   field: 'editar',
-    //   headerName: 'Editar',
-    //   width: 100,
-    //   renderCell: (param) => (
-    //     <Button
-    //       variant="text"
-    //       startIcon={<ModeEditOutlineRoundedIcon />}
-    //       onClick={() => obtenerRegistro(param.row.codigo)}
-    //     />
-    //   ),
-    // },
-    // {
-    //   field: 'eliminar',
-    //   headerName: 'Eliminar',
-    //   width: 100,
-    //   renderCell: (param) => (
-    //     <Button
-    //       variant="text"
-    //       startIcon={<RemoveCircleRoundedIcon />}
-    //       // onClick={() => quitarInvitado(param.row.codigo)}
-    //     />
-    //   ),
-    // },
   ];
   return (
     <Transicion>
@@ -76,122 +85,158 @@ function UsuarioPage() {
             <Chip label="Formulario" />
           </Divider>
         </Grid>
-        <Grid item xs={12} sm={5} md={3}>
+        <Grid item xs={12} sm={5} md={2}>
           <TextField
-            // inputRef={descripcionRef}
+            inputRef={codigoUsuarioRef}
+            fullWidth
+            size="small"
+            label="Codigo"
+            variant="filled"
+            value={formulario.codigo_usuario}
+            onChange={(e) => cambiarCodigoUsuario(e)}
+            onInput={(e) => {
+              e.target.value = e.target.value.slice(0, 3);
+            }}
+          />
+        </Grid>
+        <Grid item xs={12} sm={5} md={3.5}>
+          <TextField
+            inputRef={nombresRef}
             fullWidth
             size="small"
             label="Nombres"
             variant="filled"
-            // value={formulario.descripcion}
-            // onChange={(e) => cambiarDescripcion(e)}
+            value={formulario.nombres}
+            onChange={(e) => cambiarNombres(e)}
           />
         </Grid>
-        <Grid item xs={12} sm={5} md={3}>
+        <Grid item xs={12} sm={5} md={3.5}>
           <TextField
-            // inputRef={descripcionRef}
+            inputRef={apellidosRef}
             fullWidth
             size="small"
             label="Apellidos"
             variant="filled"
-            // value={formulario.descripcion}
-            // onChange={(e) => cambiarDescripcion(e)}
+            value={formulario.apellidos}
+            onChange={(e) => cambiarApellidos(e)}
           />
         </Grid>
         <Grid item xs={12} sm={5} md={3}>
           <TextField
-            // inputRef={descripcionRef}
-            fullWidth
-            size="small"
-            label="Codigo Usuario"
-            variant="filled"
-            // value={formulario.descripcion}
-            // onChange={(e) => cambiarDescripcion(e)}
-          />
-        </Grid>
-        <Grid item xs={12} sm={5} md={3}>
-          <TextField
-            // inputRef={descripcionRef}
+            select
             fullWidth
             size="small"
             label="Tipo Usuario"
             variant="filled"
-            // value={formulario.descripcion}
-            // onChange={(e) => cambiarDescripcion(e)}
-          />
+            value={formulario.tipo_usuario}
+            onChange={(e) => cambiarTipoUsuario(e)}
+          >
+            {listaTipoUsuario.map((m) => (
+              <MenuItem key={m.codigo} value={m.codigo}>
+                {m.descripcion}
+              </MenuItem>
+            ))}
+          </TextField>
         </Grid>
         <Grid item xs={12} sm={5} md={3}>
           <TextField
-            // inputRef={descripcionRef}
+            inputRef={identifacacionRef}
             fullWidth
             size="small"
             label="Identificación"
             variant="filled"
-            // value={formulario.descripcion}
-            // onChange={(e) => cambiarDescripcion(e)}
+            onInput={(e) => {
+              const ultimoDigito = e.target.value.at(-1);
+              e.target.value =
+                // eslint-disable-next-line no-restricted-globals
+                !isNaN(ultimoDigito)
+                  ? (e.target.value = e.target.value.slice(0, 10))
+                  : e.target.value.replace(ultimoDigito, '');
+            }}
+            value={formulario.identificacion}
+            onChange={(e) => cambiarIdentificacion(e)}
           />
         </Grid>
         <Grid item xs={12} sm={5} md={3}>
           <TextField
-            // inputRef={descripcionRef}
+            inputRef={celularRef}
             fullWidth
             size="small"
             label="Celular"
             variant="filled"
-            // value={formulario.descripcion}
-            // onChange={(e) => cambiarDescripcion(e)}
+            onInput={(e) => {
+              const ultimoDigito = e.target.value.at(-1);
+              e.target.value =
+                // eslint-disable-next-line no-restricted-globals
+                !isNaN(ultimoDigito)
+                  ? (e.target.value = e.target.value.slice(0, 10))
+                  : e.target.value.replace(ultimoDigito, '');
+            }}
+            value={formulario.celular}
+            onChange={(e) => cambiarCelular(e)}
           />
         </Grid>
         <Grid item xs={12} sm={5} md={3}>
           <TextField
-            // inputRef={descripcionRef}
+            type="email"
+            inputRef={correoRef}
             fullWidth
             size="small"
             label="Correo"
             variant="filled"
-            // value={formulario.descripcion}
-            // onChange={(e) => cambiarDescripcion(e)}
+            value={formulario.correo}
+            onChange={(e) => cambiarCorreo(e)}
           />
         </Grid>
         <Grid item xs={12} sm={5} md={3}>
           <TextField
-            // inputRef={descripcionRef}
+            type="password"
+            inputRef={claveRef}
             fullWidth
             size="small"
             label="Clave"
             variant="filled"
-            // value={formulario.descripcion}
-            // onChange={(e) => cambiarDescripcion(e)}
+            value={formulario.clave}
+            onChange={(e) => cambiarClave(e)}
           />
         </Grid>
-        <Grid item xs={12} sm={5} md={6}>
+        <Grid item md={2} sm={12} xs={12}>
+          <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
+            <DesktopDatePicker
+              label="Fecha Ingreso"
+              value={formulario.fecha_ingreso}
+              onChange={(e) => cambiarFechaIngreso(e)}
+              renderInput={(params) => <TextField {...params} fullWidth size="small" variant="filled" />}
+            />
+          </LocalizationProvider>
+        </Grid>
+        <Grid item xs={12} sm={5} md={4}>
           <TextField
-            // inputRef={descripcionRef}
             fullWidth
             size="small"
             label="Observacion"
             variant="filled"
-            // value={formulario.descripcion}
-            // onChange={(e) => cambiarDescripcion(e)}
+            value={formulario.observacion}
+            onChange={(e) => cambiarObservacion(e)}
           />
         </Grid>
         <Grid item xs={12} sm={2} md={1}>
           <FormControlLabel
-            control={<Checkbox checked  />}
+            control={<Checkbox checked={formulario.estado} onChange={(e) => cambiarEstado(e)} />}
             label="Estado"
           />
         </Grid>
         <Grid item xs={12} sm={2} md={2}>
           <BotonGrabar
             propiedades={{
-              onClick: () => {},
+              onClick: () => grabar(),
             }}
           />
         </Grid>
         <Grid item xs={12} sm={2} md={2}>
           <BotonNuevo
             propiedades={{
-              onClick: () => {},
+              onClick: () => nuevo(),
             }}
           />
         </Grid>
@@ -206,12 +251,13 @@ function UsuarioPage() {
             size="small"
             label="Buscar"
             variant="filled"
-            
+            value={buscar}
+            onChange={(e) => cambiarBusqueda(e)}
           />
         </Grid>
         <Grid item xs={12}>
           <Box sx={estiloTabla}>
-            <div style={{ height: '30vh', width: '100%' }}>
+            <div style={{ height: '32vh', width: '100%' }}>
               <DataGrid
                 density="compact"
                 rowHeight={28}
@@ -220,9 +266,9 @@ function UsuarioPage() {
                 components={{
                   NoRowsOverlay: IconoDataGrid,
                 }}
-                // onRowClick={(e) => obtenerRegistro(e)}
+                onRowClick={(e) => obtenerRegistro(e)}
                 columns={cabecera}
-                rows={[]}
+                rows={listaUsuario}
                 getRowId={(rows) => rows.codigo}
               />
             </div>

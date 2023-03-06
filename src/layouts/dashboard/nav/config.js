@@ -38,7 +38,7 @@ const navConfig = [
   },
   {
     title: 'Soporte',
-    path: '/dashboard/d',
+    path: '/dashboard/soporte',
     icon: icon('ic_soporte'),
   },
   // {
