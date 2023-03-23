@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 // @mui
 import { alpha } from '@mui/material/styles';
-import { MenuItem, Avatar, IconButton, Popover } from '@mui/material';
+import { MenuItem, Avatar, IconButton, Popover, Stack, Divider } from '@mui/material';
 // mocks_
 import account from '../../../_mock/account';
 
@@ -25,6 +26,8 @@ import account from '../../../_mock/account';
 // ----------------------------------------------------------------------
 
 export default function AccountPopover() {
+  const usuario = JSON.parse(window.localStorage.getItem('usuario')) ?? 'USER';
+  const navegar = useNavigate();
   const [open, setOpen] = useState(null);
 
   const handleOpen = (event) => {
@@ -33,6 +36,7 @@ export default function AccountPopover() {
 
   const handleClose = () => {
     setOpen(null);
+    navegar('/login');
   };
 
   return (
@@ -84,22 +88,15 @@ export default function AccountPopover() {
             {account.email}
           </Typography>
         </Box>
-
         <Divider sx={{ borderStyle: 'dashed' }} />
-
-        <Stack sx={{ p: 1 }}>
-          {MENU_OPTIONS.map((option) => (
-            <MenuItem key={option.label} onClick={handleClose}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </Stack>
-
         <Divider sx={{ borderStyle: 'dashed' }} /> */}
-
         <MenuItem onClick={handleClose} sx={{ m: 1 }}>
-          Allan Herrera
+          {usuario.usuario}
         </MenuItem>
+        <Divider sx={{ borderStyle: 'dashed' }} />
+        <Stack sx={{ p: 1 }}>
+          <MenuItem onClick={handleClose}>Cerrar Sesion</MenuItem>
+        </Stack>
       </Popover>
     </>
   );

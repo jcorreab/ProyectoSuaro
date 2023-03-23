@@ -10,7 +10,7 @@ const useCliente = () => {
     servicio
       .listar()
       .then((res) => {
-        const resApi = res;
+        const resApi = res.map((m) => ({ ...m, codigoalternativo: m.identificacion, nombre: m.razon_social }));
         setListaCliente(resApi);
         setListaClienteCopia(resApi);
       })

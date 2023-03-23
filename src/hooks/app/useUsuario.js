@@ -10,7 +10,11 @@ const useUsuario = () => {
     servicio
       .listar()
       .then((res) => {
-        const resApi = res;
+        const resApi = res.map((m) => ({
+          ...m,
+          codigoalternativo: m.codigo_usuario,
+          nombre: `${m.nombres} ${m.apellidos}`,
+        }));
         setListaUsuario(resApi);
         setListaUsuarioCopia(resApi);
       })

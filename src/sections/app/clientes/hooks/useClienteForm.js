@@ -69,6 +69,10 @@ const useClienteForm = () => {
       .grabar({ ...formulario, codigo: 0 })
       .then((res) => {
         if (res !== 200) {
+          mensajeSistema({
+            texto: `Error al insertar el cliente, revise si la identificacion si se encuentran registradas`,
+            variante: 'error',
+          });
           return;
         }
         mensajeSistema({
@@ -80,7 +84,7 @@ const useClienteForm = () => {
       })
       .catch((error) =>
         errorHttp({
-          mensaje: 'Error al editar el cliente, revise si la identificacion se encuentran registradas',
+          mensaje: 'Error al insertar el cliente, revise si la identificacion si se encuentran registradas',
           error,
         })
       )
@@ -91,6 +95,10 @@ const useClienteForm = () => {
       .editar(formulario)
       .then((res) => {
         if (res !== 200) {
+          mensajeSistema({
+            texto: `Error al editar el cliente, revise si la identificacion se encuentran registradas`,
+            variante: 'error',
+          });
           return;
         }
         mensajeSistema({
@@ -171,7 +179,7 @@ const useClienteForm = () => {
       correoRef.current.focus();
       return true;
     }
-    if (formulario.coordenadas.trim().length < 10) {
+    if (formulario.coordenadas.trim().length === 0) {
       mensajeSistema({
         texto: `Las Coordenadas del cliente son requeridas`,
         variante: 'warning',

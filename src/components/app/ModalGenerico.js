@@ -1,5 +1,5 @@
 import { useState, useEffect, memo } from 'react';
-import { TextField, Grid, Modal, Fade, InputAdornment, Box, Button } from '@mui/material';
+import { TextField, Grid, Modal, Fade, InputAdornment, Box } from '@mui/material';
 import { DataGrid, esES } from '@mui/x-data-grid';
 import PropTypes from 'prop-types';
 import {
@@ -7,8 +7,8 @@ import {
   estiloTabla,
   estiloModal,
   estilosContenedor,
-  estiloActivo,
-  estiloInactivo,
+  // estiloActivo,
+  // estiloInactivo,
 } from '../../theme/app/Estilos';
 import { IconoDataGrid } from './IconoDatagrid';
 import { BotonIconBuscar } from './Botones';
@@ -25,7 +25,7 @@ const cabecera = [
   {
     field: 'codigoalternativo',
     headerName: 'Codigo',
-    width: 100,
+    width: 150,
     valueFormatter: (params) => {
       if (params.value == null) {
         return '****';
@@ -37,7 +37,7 @@ const cabecera = [
   {
     field: 'nombre',
     headerName: 'Nombre',
-    width: 250,
+    width: 300,
     valueFormatter: (params) => {
       if (params.value == null) {
         return '****';
@@ -45,43 +45,43 @@ const cabecera = [
       return `${params.value}`.toUpperCase();
     },
   },
-  {
-    field: 'edad',
-    headerName: 'Edad',
-    width: 80,
-    valueFormatter: (params) => {
-      if (params.value == null) {
-        return '****';
-      }
-      return `${params.value} Años`;
-    },
-  },
-  {
-    field: 'correo',
-    headerName: 'Correo',
-    width: 200,
-    valueFormatter: (params) => {
-      if (params.value == null) {
-        return '****';
-      }
-      return `${params.value}`;
-    },
-  },
-  {
-    field: 'esUltimoSemestre',
-    headerName: 'Ultimo semestre',
-    width: 150,
-    renderCell: (param) =>
-      param.row.esUltimoSemestre ? (
-        <Button variant="containded" style={estiloActivo}>
-          Si
-        </Button>
-      ) : (
-        <Button variant="containded" style={estiloInactivo}>
-          No
-        </Button>
-      ),
-  },
+  // {
+  //   field: 'edad',
+  //   headerName: 'Edad',
+  //   width: 80,
+  //   valueFormatter: (params) => {
+  //     if (params.value == null) {
+  //       return '****';
+  //     }
+  //     return `${params.value} Años`;
+  //   },
+  // },
+  // {
+  //   field: 'correo',
+  //   headerName: 'Correo',
+  //   width: 200,
+  //   valueFormatter: (params) => {
+  //     if (params.value == null) {
+  //       return '****';
+  //     }
+  //     return `${params.value}`;
+  //   },
+  // },
+  // {
+  //   field: 'esUltimoSemestre',
+  //   headerName: 'Ultimo semestre',
+  //   width: 150,
+  //   renderCell: (param) =>
+  //     param.row.esUltimoSemestre ? (
+  //       <Button variant="containded" style={estiloActivo}>
+  //         Si
+  //       </Button>
+  //     ) : (
+  //       <Button variant="containded" style={estiloInactivo}>
+  //         No
+  //       </Button>
+  //     ),
+  // },
 ];
 
 /**

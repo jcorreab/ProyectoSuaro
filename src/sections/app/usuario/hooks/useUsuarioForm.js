@@ -79,6 +79,10 @@ const useUsuarioForm = () => {
       .grabar({ ...formulario, codigo: 0 })
       .then((res) => {
         if (res !== 200) {
+          mensajeSistema({
+            texto: `Error al registrar el usuario, revise si la identificacion o el codigo de usuario se encuentran registradas`,
+            variante: 'error',
+          });
           return;
         }
         mensajeSistema({
@@ -102,6 +106,10 @@ const useUsuarioForm = () => {
       .editar(formulario)
       .then((res) => {
         if (res !== 200) {
+          mensajeSistema({
+            texto: `Error al editar el usuario, revise si la identificacion o el codigo de usuario se encuentran registradas`,
+            variante: 'error',
+          });
           return;
         }
         mensajeSistema({
