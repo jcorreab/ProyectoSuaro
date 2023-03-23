@@ -52,7 +52,7 @@ function UsuarioPage() {
     grabar,
   } = useUsuarioForm();
   const cabecera = [
-    // { field: 'codigo', headerName: 'Codigo', width: 130 },
+    { field: 'codigo_usuario', headerName: 'Codigo', width: 130 },
     { field: 'nombres', headerName: 'Nombres', width: 200 },
     { field: 'apellidos', headerName: 'Apellidos', width: 200 },
     { field: 'identificacion', headerName: 'Identificacion', width: 150 },

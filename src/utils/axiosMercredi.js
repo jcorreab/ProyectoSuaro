@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosMercredi = axios.create({
-  baseURL: 'http://127.0.0.1:8000/api/',
+  baseURL: 'https://0520-181-198-213-18.sa.ngrok.io/api/',
 });
 
 axiosMercredi.interceptors.response.use(

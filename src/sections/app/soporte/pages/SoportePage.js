@@ -1,20 +1,36 @@
 import 'dayjs/locale/es';
-import { Box, Grid, Button, TextField, Typography, Divider, Chip } from '@mui/material';
+import { Box, Grid, TextField, Typography, Divider, Chip } from '@mui/material';
 import { DataGrid, esES } from '@mui/x-data-grid';
-import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
-import TagFacesRoundedIcon from '@mui/icons-material/TagFacesRounded';
-import AlternateEmailRoundedIcon from '@mui/icons-material/AlternateEmailRounded';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { NumericFormat } from 'react-number-format';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import CajaGenerica from '../../../../components/app/CajaGenerica';
 import Transicion from '../../../../components/app/Transicion';
-import { estiloTabla, estiloDatagrid, estiloActivo, estiloInactivo } from '../../../../theme/app/Estilos';
+import { estiloTabla, estiloDatagrid } from '../../../../theme/app/Estilos';
 import { IconoDataGrid } from '../../../../components/app/IconoDatagrid';
 import { BotonGrabar, BotonNuevo } from '../../../../components/app/Botones';
+import useSoporteForm from '../hooks/useSoporte';
 
 function SoportePage() {
+  const {
+    listaUsuario,
+    listaCliente,
+    cliente,
+    buscar,
+    cambiarBusqueda,
+    tecnico1,
+    tecnico2,
+    fechaRegistro,
+    clienteRef,
+    tecnico1Ref,
+    tecnico2Ref,
+    cambiarCliente,
+    cambiarTecnico1,
+    cambiarTecnico2,
+    cambiarFechaRegistro,
+    nuevo,
+    grabar,
+  } = useSoporteForm();
   return (
     <Transicion>
       <Grid container spacing={1}>
@@ -28,45 +44,64 @@ function SoportePage() {
         </Grid>
         <Grid item container md={6} sm={12} xs={12}>
           <CajaGenerica
-            //   inputRef={estudianteRef}
+            inputRef={clienteRef}
             estadoInicial={{
-              codigoAlternativo: 'estudiante.codigo',
-              nombre: 'estudiante.nombre',
+              codigoAlternativo: cliente.identificacion,
+              nombre: cliente.nombre,
             }}
             tituloTexto={{ nombre: 'Cliente', descripcion: 'Nombre' }}
-            tituloModal="Estudiantes"
-            retornarDatos={(e) => {
-              // cambiarEstudiante(e);
-            }}
-            datos={[]}
+            tituloModal="Clientes"
+            retornarDatos={(e) => cambiarCliente(e)}
+            datos={listaCliente}
           />
         </Grid>
         <Grid item container md={6} sm={12} xs={12}>
           <CajaGenerica
-            //   inputRef={estudianteRef}
+            inputRef={tecnico1Ref}
             estadoInicial={{
-              codigoAlternativo: 'estudiante.codigo',
-              nombre: 'estudiante.nombre',
+              codigoAlternativo: tecnico1.codigo_usuario,
+              nombre: tecnico1.nombre,
             }}
             tituloTexto={{ nombre: 'Tecnico', descripcion: 'Nombre' }}
-            tituloModal="Estudiantes"
-            retornarDatos={(e) => {
-              // cambiarEstudiante(e);
-            }}
-            datos={[]}
+            tituloModal="Tecnicos"
+            retornarDatos={(e) => cambiarTecnico1(e)}
+            datos={listaUsuario}
           />
+        </Grid>
+        <Grid item container md={6} sm={12} xs={12}>
+          <CajaGenerica
+            inputRef={tecnico2Ref}
+            estadoInicial={{
+              codigoAlternativo: tecnico2.codigo_usuario,
+              nombre: tecnico2.nombre,
+            }}
+            tituloTexto={{ nombre: 'Tecnico', descripcion: 'Nombre' }}
+            tituloModal="Tecnicos"
+            retornarDatos={(e) => cambiarTecnico2(e)}
+            datos={listaUsuario}
+          />
+        </Grid>
+        <Grid item md={2} sm={12} xs={12}>
+          <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
+            <DesktopDatePicker
+              label="Fecha Registro"
+              value={fechaRegistro}
+              onChange={(e) => cambiarFechaRegistro(e)}
+              renderInput={(params) => <TextField {...params} fullWidth size="small" variant="filled" />}
+            />
+          </LocalizationProvider>
         </Grid>
         <Grid item xs={12} sm={2} md={2}>
           <BotonGrabar
             propiedades={{
-              onClick: () => {},
+              onClick: () => grabar(),
             }}
           />
         </Grid>
         <Grid item xs={12} sm={2} md={2}>
           <BotonNuevo
             propiedades={{
-              onClick: () => {},
+              onClick: () => nuevo(),
             }}
           />
         </Grid>
@@ -81,8 +116,8 @@ function SoportePage() {
             size="small"
             label="Buscar"
             variant="filled"
-            // value={buscar}
-            // onChange={(e) => cambiarBusqueda(e)}
+            value={buscar}
+            onChange={(e) => cambiarBusqueda(e)}
           />
         </Grid>
         <Grid item xs={12}>
