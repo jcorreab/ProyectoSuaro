@@ -47,6 +47,7 @@ const useLogin = () => {
         }
         window.localStorage.setItem('usuario', JSON.stringify({ usuario: formulario.usuario }));
         navigate('/dashboard', { replace: true });
+        window.location.reload()
       })
       .catch((error) => errorHttp({ mensaje: 'Usuario o contraseña incorrecta', error }));
   };

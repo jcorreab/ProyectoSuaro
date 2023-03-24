@@ -1,0 +1,1 @@
+export const CORS = { headers: { 'Access-Control-Allow-Origin': '*' } };

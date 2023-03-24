@@ -11,6 +11,12 @@ import { IconoDataGrid } from '../../../../components/app/IconoDatagrid';
 import { BotonGrabar, BotonNuevo } from '../../../../components/app/Botones';
 import useSoporteForm from '../hooks/useSoporte';
 
+const cabecera = [
+  { field: 'cliente', headerName: 'Cliente', width: 300 },
+  { field: 'cliente_cedula', headerName: 'Identificacion', width: 120 },
+  { field: 'operador1', headerName: 'Tecnico Principal', width: 300 },
+  { field: 'operador2', headerName: 'Tecnico Auxiliar', width: 300 },
+];
 function SoportePage() {
   const {
     listaUsuario,
@@ -24,6 +30,7 @@ function SoportePage() {
     clienteRef,
     tecnico1Ref,
     tecnico2Ref,
+    listaSoporteBuscar,
     cambiarCliente,
     cambiarTecnico1,
     cambiarTecnico2,
@@ -132,8 +139,8 @@ function SoportePage() {
                   NoRowsOverlay: IconoDataGrid,
                 }}
                 // onRowClick={(e) => obtenerRegistro(e)}
-                columns={[]}
-                rows={[]}
+                columns={cabecera}
+                rows={listaSoporteBuscar}
                 getRowId={(rows) => rows.codigo}
               />
             </div>

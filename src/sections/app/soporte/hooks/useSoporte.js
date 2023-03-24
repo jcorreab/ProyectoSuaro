@@ -5,12 +5,15 @@ import * as servicio from '../services/soporteServicesInt';
 import useError from '../../../../hooks/app/useError';
 import useCliente from '../../../../hooks/app/useCliente';
 import useTipoSoporte from '../../../../hooks/app/useTipoSoporte';
+import useSoporteBuscar from '../../../../hooks/app/useSoporteBuscar';
 
 const useSoporteForm = () => {
   const { errorHttp } = useError();
-  const { listaUsuario } = useUsuario();
-  const { listaCliente } = useCliente();
-  const { listaTipoSoporte } = useTipoSoporte();
+  const { listaUsuario, listarUsuarioApi } = useUsuario();
+  const { listaCliente, listarClienteApi } = useCliente();
+  const { listaTipoSoporte, listarTipoSoporteApi } = useTipoSoporte();
+  const { listaSoporteBuscar, listaSoporteBuscarCopia, setListaSoporteBuscar, listarSoporteBuscarApi } =
+    useSoporteBuscar();
   const { mensajeSistema } = useMensaje();
   const [cliente, setCliente] = useState({
     codigo: 0,
@@ -29,7 +32,6 @@ const useSoporteForm = () => {
   });
   const [fechaRegistro, setFechaRegistro] = useState(new Date());
   const [buscar, setBuscar] = useState('');
-
   const clienteRef = useRef();
   const tecnico1Ref = useRef();
   const tecnico2Ref = useRef();
@@ -40,9 +42,25 @@ const useSoporteForm = () => {
   const cambiarTecnico2 = (e) =>
     setTecnico2({ codigo: e.codigo, codigo_usuario: e.codigoalternativo, nombre: e.nombre });
   const cambiarFechaRegistro = (e) => setFechaRegistro(e);
-  const cambiarBusqueda = (e) => setBuscar(e.target.value);
+  const cambiarBusqueda = (e) => {
+    const texto = String(e.target.value).toUpperCase();
+    const filtro = listaSoporteBuscarCopia.filter(
+      (f) => String(f.cliente).toUpperCase().includes(texto) || String(f.cliente_cedula).toUpperCase().includes(texto)
+    );
+    setListaSoporteBuscar(filtro);
+    setBuscar(e.target.value);
+  };
 
-  const nuevo = () => {};
+  const nuevo = () => {
+    listarUsuarioApi();
+    listarClienteApi();
+    listarTipoSoporteApi();
+    listarSoporteBuscarApi();
+    setCliente({ codigo: 0, identificacion: '', nombre: '' });
+    setTecnico1({ codigo: 0, codigo_usuario: '', nombre: '' });
+    setTecnico2({ codigo: 0, codigo_usuario: '', nombre: '' });
+    setFechaRegistro(new Date());
+  };
   const agregarRegistro = () => {
     servicio
       .grabar({
@@ -107,6 +125,7 @@ const useSoporteForm = () => {
       return;
     }
     agregarRegistro();
+    nuevo();
   };
   return {
     listaUsuario,
@@ -120,6 +139,7 @@ const useSoporteForm = () => {
     clienteRef,
     tecnico1Ref,
     tecnico2Ref,
+    listaSoporteBuscar,
     cambiarCliente,
     cambiarTecnico1,
     cambiarTecnico2,
