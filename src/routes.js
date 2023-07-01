@@ -5,7 +5,7 @@ import SimpleLayout from './layouts/simple';
 //
 import BlogPage from './pages/BlogPage';
 import UserPage from './pages/UserPage';
-import LoginPage from './pages/LoginPage';
+// import LoginPage from './pages/LoginPage';
 import Page404 from './pages/Page404';
 import ProductsPage from './pages/ProductsPage';
 import DashboardAppPage from './pages/DashboardAppPage';
@@ -16,7 +16,8 @@ import ClientePage from './sections/app/clientes/pages/ClientePage';
 import ProductoPage from './sections/app/producto/pages/ProductoPage'
 import TipoSoportePage from './sections/app/tipo-soporte/pages/TipoSoportePage';
 import SoportePage from './sections/app/soporte/pages/SoportePage';
-
+// RUTAS APP
+import LoginPageCliente from './pages/app/cliente/login/login_page';
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -41,7 +42,7 @@ export default function Router() {
     },
     {
       path: 'login',
-      element: <LoginPage />,
+      element: <LoginPageCliente />,
     },
     {
       element: <SimpleLayout />,

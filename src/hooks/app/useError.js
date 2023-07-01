@@ -9,33 +9,33 @@ function useError() {
    */
   const errorHttp = ({ error, mensaje }) => {
     try {
-      const errorSistema = typeof error.response === 'undefined' ? error : error.response.status.toString();
+      const errorSistema = error;
       switch (errorSistema) {
-        case '400':
+        case 400:
           mensajeSistema({
             texto: mensaje,
             variante: 'error',
           });
           break;
-        case '401':
+        case 401:
           mensajeSistema({
             texto: ' La sesion expiro. Inicie sesion nuevamente',
             variante: 'error',
           });
           break;
-        case '404':
+        case 404:
           mensajeSistema({
             texto: 'La ruta de la api no se encuentra disponible. Error 404',
             variante: 'error',
           });
           break;
-        case '405':
+        case 405:
           mensajeSistema({
             texto: 'El metodo http es incorrecto. Error 405',
             variante: 'error',
           });
           break;
-        case '500':
+        case 500:
           mensajeSistema({
             texto: mensaje,
             variante: 'error',
