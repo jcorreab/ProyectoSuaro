@@ -14,8 +14,11 @@ import Scrollbar from '../../../components/scrollbar';
 import NavSection from '../../../components/nav-section';
 //
 import navConfig from './config';
+import { obtenerClienteLog } from '../../../utils/app/func/fun_storage';
 
 // ----------------------------------------------------------------------
+
+const clienteLog = obtenerClienteLog()
 
 const NAV_WIDTH = 280;
 
@@ -64,7 +67,7 @@ export default function Nav({ openNav, onCloseNav }) {
 
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {account.displayName}
+                {clienteLog.nombre}
               </Typography>
 
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>

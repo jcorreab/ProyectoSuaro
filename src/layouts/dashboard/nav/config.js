@@ -11,31 +11,31 @@ const navConfig = [
   //   path: '/dashboard/citas',
   //   icon: icon('file-copy'),
   // },
-  {
-    title: 'Tipos Usuarios',
-    path: '/dashboard/tipousuario',
-    icon: icon('ic_tipo_usuario'),
-  },
-  {
-    title: 'Usuarios',
-    path: '/dashboard/usuario',
-    icon: icon('ic_usuario'),
-  },
-  {
-    title: 'Clientes',
-    path: '/dashboard/cliente',
-    icon: icon('ic_cliente'),
-  },
-  {
-    title: 'Productos',
-    path: '/dashboard/producto',
-    icon: icon('ic_item'),
-  },
-  {
-    title: 'Tipos Soportes',
-    path: '/dashboard/tiposoporte',
-    icon: icon('ic_tipo_soporte'),
-  },
+  // {
+  //   title: 'Tipos Usuarios',
+  //   path: '/dashboard/tipousuario',
+  //   icon: icon('ic_tipo_usuario'),
+  // },
+  // {
+  //   title: 'Usuarios',
+  //   path: '/dashboard/usuario',
+  //   icon: icon('ic_usuario'),
+  // },
+  // {
+  //   title: 'Clientes',
+  //   path: '/dashboard/cliente',
+  //   icon: icon('ic_cliente'),
+  // },
+  // {
+  //   title: 'Productos',
+  //   path: '/dashboard/producto',
+  //   icon: icon('ic_item'),
+  // },
+  // {
+  //   title: 'Tipos Soportes',
+  //   path: '/dashboard/tiposoporte',
+  //   icon: icon('ic_tipo_soporte'),
+  // },
   {
     title: 'Soporte',
     path: '/dashboard/soporte',

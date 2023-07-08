@@ -5,6 +5,7 @@ import { alpha } from '@mui/material/styles';
 import { MenuItem, Avatar, IconButton, Popover, Stack, Divider } from '@mui/material';
 // mocks_
 import account from '../../../_mock/account';
+import { obtenerClienteLog } from '../../../utils/app/func/fun_storage';
 
 // ----------------------------------------------------------------------
 
@@ -25,8 +26,9 @@ import account from '../../../_mock/account';
 
 // ----------------------------------------------------------------------
 
+const clienteLog = obtenerClienteLog();
+
 export default function AccountPopover() {
-  const usuario = JSON.parse(window.localStorage.getItem('usuario')) ?? 'USER';
   const navegar = useNavigate();
   const [open, setOpen] = useState(null);
 
@@ -36,7 +38,6 @@ export default function AccountPopover() {
 
   const handleClose = () => {
     setOpen(null);
-    navegar('/login');
   };
 
   return (
@@ -91,11 +92,17 @@ export default function AccountPopover() {
         <Divider sx={{ borderStyle: 'dashed' }} />
         <Divider sx={{ borderStyle: 'dashed' }} /> */}
         <MenuItem onClick={handleClose} sx={{ m: 1 }}>
-          {usuario.usuario}
+          {clienteLog.nombre}
         </MenuItem>
         <Divider sx={{ borderStyle: 'dashed' }} />
         <Stack sx={{ p: 1 }}>
-          <MenuItem onClick={handleClose}>Cerrar Sesion</MenuItem>
+          <MenuItem
+            onClick={() => {
+              navegar('/login');
+            }}
+          >
+            Cerrar Sesion
+          </MenuItem>
         </Stack>
       </Popover>
     </>

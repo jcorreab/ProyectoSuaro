@@ -6,7 +6,7 @@ export default function useMensaje() {
    * Mensaje del sistema
    * @param {{ texto: string, variante: string }}
    */
-  const mensajeSistema = ({ texto, variante }) => {
+  const mensajeSistema = ({ texto, variante = 'warning' }) => {
     enqueueSnackbar(texto, {
       variant: variante,
       anchorOrigin: {

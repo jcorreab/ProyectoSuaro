@@ -1,7 +1,12 @@
 import axios from 'axios';
 
 const axiosMain = axios.create({
-  baseURL: 'https://ea46-181-198-213-18.ngrok-free.app/api'
+  baseURL: 'http://127.0.0.1:8090/api',
+});
+
+axiosMain.interceptors.request.use((config) => {
+  config.headers['Access-Control-Allow-Origin'] = '*';
+  return config;
 });
 
 axiosMain.interceptors.response.use(

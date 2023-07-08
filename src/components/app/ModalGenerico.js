@@ -25,6 +25,7 @@ const cabecera = [
   {
     field: 'codigoalternativo',
     headerName: 'Codigo',
+    hide: true,
     width: 150,
     valueFormatter: (params) => {
       if (params.value == null) {
@@ -37,7 +38,7 @@ const cabecera = [
   {
     field: 'nombre',
     headerName: 'Nombre',
-    width: 300,
+    width: 600,
     valueFormatter: (params) => {
       if (params.value == null) {
         return '****';

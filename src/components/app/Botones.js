@@ -9,61 +9,40 @@ import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
  */
 // eslint-disable-next-line react/prop-types
 export const BotonNuevo = ({ propiedades }) => (
-    <Button
-        fullWidth
-        variant="text"
-        startIcon={<InsertDriveFileRoundedIcon />}
-        {...propiedades}
-    >
-        Nuevo
-    </Button>
-)
+  <Button fullWidth size="large" variant="text" startIcon={<InsertDriveFileRoundedIcon />} {...propiedades}>
+    Nuevo
+  </Button>
+);
 
 /**
  * @param {{ propiedades: object, texto: string }} Props
  */
 // eslint-disable-next-line react/prop-types
 export const BotonAgregar = ({ propiedades, texto }) => (
-    <Button
-        fullWidth
-        variant="text"
-        startIcon={<AddCircleRoundedIcon />}
-        {...propiedades}
-    >
-        {texto}
-    </Button>
-)
+  <Button fullWidth size="large" variant="text" startIcon={<AddCircleRoundedIcon />} {...propiedades}>
+    {texto}
+  </Button>
+);
 
 /**
  * @param {{ propiedades: object }} Props
  */
 // eslint-disable-next-line react/prop-types
 export const BotonBuscar = ({ propiedades }) => (
-    <Button
-        fullWidth
-        variant="text"
-        startIcon={<SearchRoundedIcon />}
-        {...propiedades}
-    >
-        Buscar
-    </Button>
-)
+  <Button fullWidth variant="text" startIcon={<SearchRoundedIcon />} {...propiedades}>
+    Buscar
+  </Button>
+);
 
 /**
  * @param {{ propiedades: object, texto: string }} Props
  */
 // eslint-disable-next-line react/prop-types
 export const BotonGrabar = ({ propiedades, texto }) => (
-    <Button
-        fullWidth
-        variant="text"
-        startIcon={<SaveRoundedIcon />}
-        {...propiedades}
-    >
-        {texto}
-    </Button>
-)
-
+  <Button fullWidth size="large" variant="text" startIcon={<SaveRoundedIcon />} {...propiedades}>
+    {texto}
+  </Button>
+);
 
 /**
  * @param {{ propiedades: object }} Props
@@ -82,5 +61,3 @@ BotonGrabar.defaultProps = {
 BotonAgregar.defaultProps = {
   texto: 'Agregar',
 };
-
-

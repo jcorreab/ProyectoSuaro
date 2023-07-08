@@ -1,6 +1,5 @@
 import Page from '../../../../components/app/Page';
-import LoginFormComponent from '../../../../sections/app/clients/login/componentes/login_form';
-import LoginComponent from '../../../../sections/app/clients/login/componentes/login';
+import LoginComponent from '../../../../sections/app/cliente/login/componentes/login';
 
 function LoginPageCliente() {
   return (

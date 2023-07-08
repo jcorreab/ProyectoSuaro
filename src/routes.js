@@ -7,17 +7,11 @@ import BlogPage from './pages/BlogPage';
 import UserPage from './pages/UserPage';
 // import LoginPage from './pages/LoginPage';
 import Page404 from './pages/Page404';
-import ProductsPage from './pages/ProductsPage';
 import DashboardAppPage from './pages/DashboardAppPage';
-import Citas from './sections/app/citas/Citas';
-import TipoUsuarioPage from './sections/app/tipo-usuario/pages/TipoUsuarioPage';
-import UsuarioPage from './sections/app/usuario/pages/usuarioPage';
-import ClientePage from './sections/app/clientes/pages/ClientePage';
-import ProductoPage from './sections/app/producto/pages/ProductoPage'
-import TipoSoportePage from './sections/app/tipo-soporte/pages/TipoSoportePage';
-import SoportePage from './sections/app/soporte/pages/SoportePage';
 // RUTAS APP
 import LoginPageCliente from './pages/app/cliente/login/login_page';
+import RegistroPageCliente from './pages/app/cliente/registro/registro_page';
+import SoportePage from './pages/app/cliente/soporte/soporte_page';
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -29,20 +23,17 @@ export default function Router() {
         { element: <Navigate to="/dashboard/soporte" />, index: true },
         { path: 'app', element: <DashboardAppPage /> },
         { path: 'user', element: <UserPage /> },
-        { path: 'products', element: <ProductsPage /> },
         { path: 'blog', element: <BlogPage /> },
-        { path: 'citas', element: <Citas /> },
-        { path: 'tipousuario', element: <TipoUsuarioPage /> },
-        { path: 'usuario', element: <UsuarioPage /> },
-        { path: 'cliente', element: <ClientePage /> },
-        { path: 'producto', element: <ProductoPage /> },
-        { path: 'tiposoporte', element: <TipoSoportePage /> },
         { path: 'soporte', element: <SoportePage /> },
       ],
     },
     {
       path: 'login',
       element: <LoginPageCliente />,
+    },
+    {
+      path: 'registro',
+      element: <RegistroPageCliente />,
     },
     {
       element: <SimpleLayout />,
