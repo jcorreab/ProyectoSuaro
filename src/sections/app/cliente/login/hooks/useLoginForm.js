@@ -5,9 +5,11 @@ import useMensaje from '../../../../../hooks/app/useMensaje';
 import * as servicio from '../servicios/servicios_int';
 import { validarVacios } from '../../../../../utils/app/func/fun_valida';
 import { guardarClienteLog } from '../../../../../utils/app/func/fun_storage';
+import useCargando from '../../../../../hooks/app/useCargando';
 
 const useLoginForm = () => {
   const navegar = useNavigate();
+  const { empezarCarga, terminarCarga } = useCargando();
   const { errorHttp } = useError();
   const { mensajeSistema } = useMensaje();
   const [formulario, setFormulario] = useState({
@@ -35,6 +37,8 @@ const useLoginForm = () => {
         claveRef.current.focus();
         return;
       }
+
+      empezarCarga();
       servicio
         .acceder({
           identity: formulario.usuario,
@@ -42,9 +46,10 @@ const useLoginForm = () => {
         })
         .then((res) => {
           guardarClienteLog(res);
-          navegarAceeder()
+          navegarAceeder();
         })
-        .catch((error) => errorHttp({ error: error.code, mensaje: 'Revise si el usuario o contraseña son correcta' }));
+        .catch((error) => errorHttp({ error: error.code, mensaje: 'Revise si el usuario o contraseña son correcta' }))
+        .finally(() => terminarCarga());
     } catch (error) {
       //
     }

@@ -6,6 +6,7 @@ import ThemeProvider from './theme';
 import ScrollToTop from './components/scroll-to-top';
 import { StyledChart } from './components/chart';
 import NotistackProvider from './components/app/NotistackProvider';
+import Cargando from './components/app/Cargando';
 
 // ----------------------------------------------------------------------
 
@@ -16,6 +17,7 @@ export default function App() {
         <ScrollToTop />
         <StyledChart />
         <Router />
+        <Cargando/>
       </NotistackProvider>
     </ThemeProvider>
   );

@@ -3,8 +3,14 @@ import useError from '../../../../../hooks/app/useError';
 import useSoporte from '../../../../../hooks/app/useSoporte';
 import useMensaje from '../../../../../hooks/app/useMensaje';
 import { validarVacios } from '../../../../../utils/app/func/fun_valida';
+import * as servicio from '../servicios/servicios_int';
+import { obtenerClienteLog } from '../../../../../utils/app/func/fun_storage';
+import useCargando from '../../../../../hooks/app/useCargando';
+
+const clienteLog = obtenerClienteLog();
 
 const useSoporteForm = () => {
+  const { empezarCarga, terminarCarga } = useCargando();
   const { errorHttp } = useError();
   const { mensajeSistema } = useMensaje();
   const { listaSoporte, listarSoporteApi } = useSoporte();
@@ -34,7 +40,7 @@ const useSoporteForm = () => {
     });
   };
 
-  const cambiarDetalle = (e) => setDatos({ ...datos, detalle: e.target.value });
+  const cambiarDetalle = (e) => setDatos({ ...datos, detalle: String(e.target.value).toUpperCase() });
   const cambiarSoporte = (e) => {
     setSoporte(e);
   };
@@ -74,8 +80,41 @@ const useSoporteForm = () => {
     setListaSoporteTabla(nuevaLista);
   };
 
-  const nuevo = () => {};
-  const grabar = () => {};
+  const nuevo = () => {
+    limpiarDatosSoporte();
+    limpiarTabla();
+    listarSoporteApi();
+    soporteRef.current.focus();
+  };
+  const grabar = async () => {
+    try {
+      if (listaSoporteTabla.length === 0) {
+        mensajeSistema({ texto: 'No ha ingresado ningun soporte' });
+        soporteRef.current.focus();
+        return;
+      }
+      empezarCarga();
+      const datosEnvio = {
+        fecha_registro: datos.fecha,
+        cliente: clienteLog.codigo,
+        estado: false,
+      };
+      const soporteApi = await servicio.grabar(datosEnvio);
+      listaSoporteTabla.forEach(async (f) => {
+        await servicio.grabarDetalle({
+          soporte: f.codigo,
+          reservacion: soporteApi.id,
+          detalle: f.detalle,
+        });
+      });
+      mensajeSistema({ texto: 'Su soporte fue registrado correctamente', variante: 'success' });
+      nuevo();
+    } catch (error) {
+      errorHttp({ error: error.code, mensaje: 'Error al momento de grabar la cita' });
+    } finally {
+      terminarCarga();
+    }
+  };
 
   return {
     datos,

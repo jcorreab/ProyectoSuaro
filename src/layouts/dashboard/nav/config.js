@@ -6,6 +6,21 @@ import SvgColor from '../../../components/svg-color';
 const icon = (name) => <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />;
 
 const navConfig = [
+  {
+    title: 'Inicio',
+    path: '/dashboard/app',
+    icon: icon('ic_item'),
+  },
+  {
+    title: 'Soporte',
+    path: '/dashboard/soporte',
+    icon: icon('ic_soporte'),
+  },
+  {
+    title: 'Informe',
+    path: '/dashboard/citas',
+    icon: icon('ic_analytics'),
+  },
   // {
   //   title: 'Citas',
   //   path: '/dashboard/citas',
@@ -36,11 +51,6 @@ const navConfig = [
   //   path: '/dashboard/tiposoporte',
   //   icon: icon('ic_tipo_soporte'),
   // },
-  {
-    title: 'Soporte',
-    path: '/dashboard/soporte',
-    icon: icon('ic_soporte'),
-  },
   // {
   //   title: 'dashboard',
   //   path: '/dashboard/app',
