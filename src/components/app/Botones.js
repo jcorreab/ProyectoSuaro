@@ -29,7 +29,7 @@ export const BotonAgregar = ({ propiedades, texto }) => (
  */
 // eslint-disable-next-line react/prop-types
 export const BotonBuscar = ({ propiedades }) => (
-  <Button fullWidth variant="text" startIcon={<SearchRoundedIcon />} {...propiedades}>
+  <Button fullWidth size="large" variant="text" startIcon={<SearchRoundedIcon />} {...propiedades}>
     Buscar
   </Button>
 );

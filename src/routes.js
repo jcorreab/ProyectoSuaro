@@ -12,6 +12,9 @@ import DashboardAppPage from './pages/DashboardAppPage';
 import LoginPageCliente from './pages/app/cliente/login/login_page';
 import RegistroPageCliente from './pages/app/cliente/registro/registro_page';
 import SoportePage from './pages/app/cliente/soporte/soporte_page';
+import InformeSoportePage from './pages/app/cliente/informe/informe_soporte_page';
+import DashboardInicioPage from './pages/app/cliente/inicio/dashboard_inicio_page';
+import LoginPageUsuario from './pages/app/usuario/login/login_page';
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -25,11 +28,17 @@ export default function Router() {
         { path: 'user', element: <UserPage /> },
         { path: 'blog', element: <BlogPage /> },
         { path: 'soporte', element: <SoportePage /> },
+        { path: 'informesoporte', element: <InformeSoportePage /> },
+        { path: 'inicio', element: <DashboardInicioPage /> },
       ],
     },
     {
       path: 'login',
       element: <LoginPageCliente />,
+    },
+    {
+      path: 'loginusuario',
+      element: <LoginPageUsuario />,
     },
     {
       path: 'registro',

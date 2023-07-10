@@ -107,10 +107,15 @@ const useSoporteForm = () => {
           detalle: f.detalle,
         });
       });
-      mensajeSistema({ texto: 'Su soporte fue registrado correctamente', variante: 'success' });
+      servicio.enviarCorreo({ correo: clienteLog.correo, nombre: clienteLog.nombre });
+
+      mensajeSistema({
+        texto: 'Su soporte fue registrado correctamente, verifique su correo si su reservacion fue aceptada',
+        variante: 'success',
+      });
       nuevo();
     } catch (error) {
-      errorHttp({ error: error.code, mensaje: 'Error al momento de grabar la cita' });
+      errorHttp({ error: error.code, mensaje: 'Error al momento de grabar la reservacion' });
     } finally {
       terminarCarga();
     }

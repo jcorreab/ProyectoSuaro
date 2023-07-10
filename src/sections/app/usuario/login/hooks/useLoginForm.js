@@ -4,7 +4,7 @@ import useError from '../../../../../hooks/app/useError';
 import useMensaje from '../../../../../hooks/app/useMensaje';
 import * as servicio from '../servicios/servicios_int';
 import { validarVacios } from '../../../../../utils/app/func/fun_valida';
-import { guardarClienteLog } from '../../../../../utils/app/func/fun_storage';
+import { guardarUsuarioLog } from '../../../../../utils/app/func/fun_storage';
 import useCargando from '../../../../../hooks/app/useCargando';
 
 const useLoginForm = () => {
@@ -45,9 +45,8 @@ const useLoginForm = () => {
           password: formulario.clave,
         })
         .then((res) => {
-          guardarClienteLog(res);
+          guardarUsuarioLog(res);
           navegarAceeder();
-          window.location.reload()
         })
         .catch((error) => errorHttp({ error: error.code, mensaje: 'Revise si el usuario o contraseña son correcta' }))
         .finally(() => terminarCarga());
