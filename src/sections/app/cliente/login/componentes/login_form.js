@@ -42,12 +42,12 @@ function LoginFormComponent() {
         />
       </Grid>
       <Grid item xs={12}>
-        <Button fullWidth variant="contained" size="large" onClick={() => acceder()}>
+        <Button fullWidth color='inherit' variant="contained" size="large" onClick={() => acceder()}>
           Acceder
         </Button>
       </Grid>
       <Grid item xs={12}>
-        <Button fullWidth size="large">
+        <Button fullWidth size="large" color='inherit'>
           Olvidates tu Contraseña
         </Button>
       </Grid>
