@@ -12,12 +12,12 @@ const navConfig = [
     icon: icon('ic_item'),
   },
   {
-    title: 'Soporte',
+    title: 'Reserva Entrenador',
     path: '/dashboard/soporte',
     icon: icon('ic_soporte'),
   },
   {
-    title: 'Informe',
+    title: 'Reserva Lugar',
     path: '/dashboard/informesoporte',
     icon: icon('ic_analytics'),
   },

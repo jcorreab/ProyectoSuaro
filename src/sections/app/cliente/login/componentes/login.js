@@ -1,6 +1,6 @@
 import { Grid, Typography, Alert } from '@mui/material';
 import Transicion from '../../../../../components/app/Transicion';
-import LogoEmpresa from '../../../../../assets/img/LoginGym.png';
+import LogoEmpresa from '../../../../../assets/LogoGym.png';
 import LoginFormComponent from './login_form';
 import useResponsive from '../../../../../hooks/useResponsive';
 

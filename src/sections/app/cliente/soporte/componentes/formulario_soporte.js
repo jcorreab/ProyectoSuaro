@@ -1,23 +1,27 @@
 import { Grid, TextField, Chip, Divider, Box, Button } from '@mui/material';
 import { DataGrid, esES } from '@mui/x-data-grid';
 import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import es from 'date-fns/locale/es';
 import Transicion from '../../../../../components/app/Transicion';
 import SelectorGenerico from '../../../../../components/app/SelectorGenerico';
-import { BotonAgregar, BotonGrabar, BotonNuevo } from '../../../../../components/app/Botones';
+import { BotonGrabar, BotonNuevo, BotonBuscar } from '../../../../../components/app/Botones';
 import { estiloTabla, estiloDatagrid } from '../../../../../theme/app/Estilos';
 import { IconoDataGrid } from '../../../../../components/app/IconoDatagrid';
 import useSoporteForm from '../hooks/useSoporteForm';
 
 function FormularioSoporteComponent() {
   const {
-    datos,
+    // datos,
     soporte,
     listaSoporte,
     soporteRef,
-    detalleRef,
+    //  detalleRef,
     listaSoporteTabla,
     cambiarSoporte,
-    cambiarDetalle,
+    // cambiarDetalle,
     agregarSoporte,
     eliminarSoporteTabla,
     nuevo,
@@ -25,11 +29,11 @@ function FormularioSoporteComponent() {
   } = useSoporteForm();
 
   const cabecera = [
-    { field: 'soporte', headerName: 'Soporte', width: 300 },
-    { field: 'detalle', headerName: 'Detalle', width: 600 },
+    { field: 'soporte', headerName: 'Nombre ', width: 300 },
+    { field: 'detalle', headerName: 'Fecha', width: 600 },
     {
       field: 'eliminar',
-      headerName: 'Eliminar',
+      headerName: 'Reservar',
       width: 150,
       renderCell: (e) => (
         <Button variant="text" startIcon={<RemoveCircleRoundedIcon />} onClick={() => eliminarSoporteTabla(e)} />
@@ -41,7 +45,7 @@ function FormularioSoporteComponent() {
       <Grid container spacing={1}>
         <Grid item xs={12}>
           <Divider>
-            <Chip label="Formulario Soporte" />
+            <Chip label="Reservar Entrenador" />
           </Divider>
         </Grid>
         <Grid item xs={12} justifyContent="flex-end" container spacing={1}>
@@ -66,24 +70,44 @@ function FormularioSoporteComponent() {
             estadoInicial={{
               nombre: soporte.nombre,
             }}
-            tituloTexto="Soporte"
-            tituloModal="Soporte"
+            tituloTexto="Entrenador"
+            tituloModal="Entrenador"
             retornarDatos={(e) => cambiarSoporte(e)}
             datos={listaSoporte}
           />
         </Grid>
         <Grid item md={6} xs={12}>
-          <TextField
+          <LocalizationProvider dateAdapter={AdapterDateFns} locale={es}>
+            <DesktopDatePicker
+              label="Fecha Desde"
+              inputFormat="dd/MM/yyyy"
+              // readOnly
+
+              value={new Date()}
+              onChange={(e) => {
+                // if (e === null) {
+                //   messajeTool('warning', 'Ingrese la fecha de forma correcta, el sistema tomara la fecha actual ');
+                // }
+                // setMenu({
+                //   ...menus,
+                //   fdesde: isValidDate(e) ? e : new Date(),
+                // });
+                // setError(false);
+              }}
+              renderInput={(params) => <TextField {...params} fullWidth size="small" />}
+            />
+          </LocalizationProvider>
+          {/* <TextField
             fullWidth
             variant="filled"
             label="Detalle"
             inputRef={detalleRef}
             value={datos.detalle}
             onChange={(e) => cambiarDetalle(e)}
-          />
+          /> */}
         </Grid>
         <Grid item md={2} xs={12}>
-          <BotonAgregar
+          <BotonBuscar
             propiedades={{
               onClick: () => agregarSoporte(),
             }}

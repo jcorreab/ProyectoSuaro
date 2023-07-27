@@ -4,7 +4,7 @@ import { Link as RouterLink } from 'react-router-dom';
 // @mui
 // import { useTheme } from '@mui/material/styles';
 import { Box, Link } from '@mui/material';
-import ImgLogoMercredi from '../../assets/logo_mercredi.png';
+import ImgLogoMercredi from '../../assets/LogoGym.png';
 // ----------------------------------------------------------------------
 
 const Logo = forwardRef(({ disabledLink = false, sx, ...other }, ref) => {

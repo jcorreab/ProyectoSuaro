@@ -46,7 +46,7 @@ export default function LoginPage() {
   return (
     <>
       <Helmet>
-        <title> INICIO SESION | MERCREDI S.A. </title>
+        <title> INICIO SESION  </title>
       </Helmet>
 
       <StyledRoot>
@@ -63,7 +63,7 @@ export default function LoginPage() {
             <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
               HOLA, BIENVENIDO A SOPORTE
             </Typography>
-            <img src="/assets/illustrations/illustration_login.png" alt="login" />
+            <img src="/assets/LogoGym.png" alt="login" />
           </StyledSection>
         )}
 

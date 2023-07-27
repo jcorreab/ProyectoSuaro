@@ -3,7 +3,7 @@ import Page from '../../../../components/app/Page';
 
 function InformeSoportePage() {
   return (
-    <Page title="Informe Soporte">
+    <Page title="ReservaEntrenador">
       <InformeSoporteComponent />
     </Page>
   );
