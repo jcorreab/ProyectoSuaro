@@ -58,7 +58,7 @@ export default function Header({ onOpenNav }) {
         </IconButton>
 
         {/* <Searchbar /> */}
-        <Typography variant="h5" sx={{ 'color': 'common.black' }}> MERCREDI S.A.</Typography>
+        <Typography variant="h5" sx={{ 'color': 'common.black' }}> GymMaster</Typography>
         <Box sx={{ flexGrow: 1 }} />
 
         <Stack

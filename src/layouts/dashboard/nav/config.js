@@ -14,12 +14,12 @@ const navConfig = [
   {
     title: 'Reserva Entrenador',
     path: '/dashboard/soporte',
-    icon: icon('ic_soporte'),
+    icon: icon('ic_entrenador'),
   },
   {
     title: 'Reserva Lugar',
     path: '/dashboard/informesoporte',
-    icon: icon('ic_analytics'),
+    icon: icon('ic_lugar'),
   },
   // {
   //   title: 'Citas',

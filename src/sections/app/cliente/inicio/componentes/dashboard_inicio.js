@@ -1,9 +1,11 @@
+import DashboardAppPage from '../../../../../pages/DashboardAppPage';
+
 function DashboardInicioComponent() {
   return (
     <>
-      <h1>holaa desde inicio</h1>
+      <DashboardAppPage />
     </>
   );
 }
 
-export default DashboardInicioComponent
+export default DashboardInicioComponent;

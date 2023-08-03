@@ -23,7 +23,7 @@ const useLoginForm = () => {
   const cambiarUsuario = (e) => setFormulario({ ...formulario, usuario: e.target.value });
   const cambiarClave = (e) => setFormulario({ ...formulario, clave: e.target.value });
   const navegarRegistrar = () => navegar('/registro');
-  const navegarAceeder = () => navegar('/dashboard/soporte');
+  const navegarAceeder = () => navegar('/dashboard/inicio');
 
   const acceder = () => {
     try {
@@ -52,6 +52,8 @@ const useLoginForm = () => {
         .catch((error) => errorHttp({ error: error.code, mensaje: 'Revise si el usuario o contraseña son correcta' }))
         .finally(() => terminarCarga());
     } catch (error) {
+      console.log(error)
+
       //
     }
   };
