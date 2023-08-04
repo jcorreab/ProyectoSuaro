@@ -45,11 +45,11 @@ export default function DashboardAppPage() {
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="IMC" total={1723315} color="warning" icon={'game-icons:frozen-body'} />
+            <AppWidgetSummary title="IMC" total={40633100} color="warning" icon={'game-icons:frozen-body'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Peso Optimo" total={234} color="error" icon={'mdi:weight-kilogram'} />
+            <AppWidgetSummary title="Peso Optimo" total={110} color="error" icon={'mdi:weight-kilogram'} />
           </Grid>
 
           {/* <Grid item xs={12} md={6} lg={8}>
@@ -92,7 +92,7 @@ export default function DashboardAppPage() {
             />
           </Grid> */}
 
-          <Grid item xs={12} md={6} lg={4}>
+          {/* <Grid item xs={12} md={6} lg={4}>
             <AppCurrentVisits
               title="Current Visits"
               chartData={[
@@ -108,7 +108,7 @@ export default function DashboardAppPage() {
                 theme.palette.error.main,
               ]}
             />
-          </Grid>
+          </Grid> */}
 
           <Grid item xs={12} md={6} lg={8}>
             <AppConversionRates
