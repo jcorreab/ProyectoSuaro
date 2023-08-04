@@ -9,7 +9,7 @@ import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
  */
 // eslint-disable-next-line react/prop-types
 export const BotonNuevo = ({ propiedades }) => (
-  <Button fullWidth size="large" variant="text" startIcon={<InsertDriveFileRoundedIcon />} {...propiedades}>
+  <Button fullWidth size="large" variant="text"  color='inherit' startIcon={<InsertDriveFileRoundedIcon />} {...propiedades}>
     Nuevo
   </Button>
 );
@@ -19,7 +19,7 @@ export const BotonNuevo = ({ propiedades }) => (
  */
 // eslint-disable-next-line react/prop-types
 export const BotonAgregar = ({ propiedades, texto }) => (
-  <Button fullWidth size="large" variant="text" startIcon={<AddCircleRoundedIcon />} {...propiedades}>
+  <Button fullWidth size="large" variant="text" color="inherit" startIcon={<AddCircleRoundedIcon />} {...propiedades}>
     {texto}
   </Button>
 );
@@ -29,7 +29,7 @@ export const BotonAgregar = ({ propiedades, texto }) => (
  */
 // eslint-disable-next-line react/prop-types
 export const BotonBuscar = ({ propiedades }) => (
-  <Button fullWidth size="large" variant="text" startIcon={<SearchRoundedIcon />} {...propiedades}>
+  <Button fullWidth size="large" variant="text" color="inherit" startIcon={<SearchRoundedIcon />} {...propiedades}>
     Buscar
   </Button>
 );
@@ -39,7 +39,7 @@ export const BotonBuscar = ({ propiedades }) => (
  */
 // eslint-disable-next-line react/prop-types
 export const BotonGrabar = ({ propiedades, texto }) => (
-  <Button fullWidth size="large" variant="text" startIcon={<SaveRoundedIcon />} {...propiedades}>
+  <Button fullWidth size="large" variant="text" color="inherit" startIcon={<SaveRoundedIcon />} {...propiedades}>
     {texto}
   </Button>
 );
