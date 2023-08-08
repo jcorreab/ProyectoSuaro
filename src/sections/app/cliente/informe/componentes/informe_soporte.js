@@ -1,9 +1,9 @@
 // import 'dayjs/locale/es';
-import { Grid, Chip, Divider, Box, FormControlLabel, Checkbox, Button } from '@mui/material';
+import { Grid, Chip, Divider, Box, FormControlLabel, Checkbox, Button, TextField } from '@mui/material';
 import { DataGrid, esES } from '@mui/x-data-grid';
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import { DesktopDatePicker } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DesktopDatePicker } from '@mui/x-date-pickers';
 import Transicion from '../../../../../components/app/Transicion';
 import SelectorGenerico from '../../../../../components/app/SelectorGenerico';
 import { BotonNuevo, BotonBuscar } from '../../../../../components/app/Botones';
@@ -16,51 +16,31 @@ function InformeSoporteComponent() {
     datos,
     soporte,
     informe,
-    listaSoporte,
+
     soporteRef,
-    cambiarEsSolucion,
-    cambiarEsTodo,
+    generarHorarioDiarioPorLugar,
+    cambiarFecha,
     cambiarSoporte,
     buscar,
     nuevo,
+    listaLugares,
   } = useInformeSoporte();
 
   const cabecera = [
-    { field: 'nombre_soporte', headerName: 'Soporte', width: 300 },
-    {
-      field: 'fecha_registro',
-      headerName: 'Fecha Registro',
-      width: 150,
-      valueFormatter: (params) => {
-        if (params.value == null) {
-          return '';
-        }
-        return String(params.value).slice(0, 10);
-      },
-    },
-    {
-      field: 'detalle',
-      headerName: 'detalle',
-      width: 600,
-    },
-    {
-      field: 'estado',
-      headerName: 'Solucionado',
-      width: 120,
-      renderCell: (e) => (
-        <Button variant="text" sx={e.row.estado ? estiloActivo : estiloInactivo}>
-          {' '}
-          {e.row.estado ? 'Solucionado' : 'Pendiente'}{' '}
-        </Button>
-      ),
-    },
+    { field: 'codigo', headerName: 'Codigo ', width: 400, hide: true },
+    { field: 'nombre', headerName: 'Lugar ', width: 400 },
+    { field: 'fecha', headerName: 'Fecha', width: 200 },
+    { field: 'horadesde', headerName: 'Hora Desde', width: 200 },
+    { field: 'horahasta', headerName: 'Hora Hasta', width: 200 },
+
+   
   ];
   return (
     <Transicion>
       <Grid container spacing={1}>
         <Grid item xs={12}>
           <Divider>
-            <Chip label="Formulario" />
+            <Chip label="Reserva Lugar" />
           </Divider>
         </Grid>
         {/* <Grid item md={2} xs={12}>
@@ -94,13 +74,25 @@ function InformeSoporteComponent() {
             estadoInicial={{
               nombre: soporte.nombre,
             }}
-            tituloTexto="Soporte"
-            tituloModal="Soporte"
+            tituloTexto="Lugar"
+            tituloModal="Lugar"
             retornarDatos={(e) => cambiarSoporte(e)}
-            datos={listaSoporte}
+            datos={listaLugares}
           />
         </Grid>
-        <Grid item md={2.5} sm={6} xs={12}>
+        <Grid item md={2} xs={6}>
+          <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
+            <DesktopDatePicker
+              label="Fecha "
+              value={datos.fecha}
+              onChange={(e) => {
+                cambiarFecha(e);
+              }}
+              renderInput={(params) => <TextField {...params} variant="filled" fullWidth />}
+            />
+          </LocalizationProvider>
+        </Grid>
+        {/* <Grid item md={2.5} sm={6} xs={12}>
           <FormControlLabel
             control={<Checkbox checked={datos.esTodo} onChange={(e) => cambiarEsTodo(e)} />}
             label="Ver todos los soportes"
@@ -111,11 +103,11 @@ function InformeSoporteComponent() {
             control={<Checkbox checked={datos.esSolucion} onChange={(e) => cambiarEsSolucion(e)} />}
             label="Ver soportes solucionados"
           />
-        </Grid>
+        </Grid> */}
         <Grid item md={1.5} xs={6}>
           <BotonBuscar
             propiedades={{
-              onClick: () => buscar(),
+              onClick: () => generarHorarioDiarioPorLugar(),
             }}
           />
         </Grid>
@@ -145,7 +137,7 @@ function InformeSoporteComponent() {
                 // onRowClick={(e) => obtenerRegistro(e)}
                 columns={cabecera}
                 rows={informe}
-                getRowId={(rows) => rows.id}
+                getRowId={(rows) => rows.codigo}
               />
             </div>
           </Box>

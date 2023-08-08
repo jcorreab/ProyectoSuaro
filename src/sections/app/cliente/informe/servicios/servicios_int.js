@@ -5,3 +5,13 @@ export const listar = async (cliente) => {
   const res = await axiosMain.get(apiUrl);
   return res.data;
 };
+export const listarLugares = async () => {
+  const apiUrl = `/collections/lugar/records`;
+  const res = await axiosMain.get(apiUrl);
+  return res.data;
+};
+export const grabar = async (datos) => {
+  const res = await axiosMain.post('/collections/reservar/records', datos);
+  return res.data;
+};
+

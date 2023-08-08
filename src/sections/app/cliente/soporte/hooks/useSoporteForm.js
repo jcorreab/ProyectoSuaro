@@ -135,7 +135,6 @@ const useSoporteForm = () => {
       const horaDesde = index + 8;
       const horaHasta = index + 9;
       const fechaDesde = fecha;
-      //  console.log('🚀 ~ file: useSoporteForm.js:170 ~ arregloHoras ~ fechaDesde:', fecha);
       fechaDesde.setHours(horaDesde, 0, 0);
       const fechaHasta = fecha;
       fechaHasta.setHours(horaHasta, 0, 0);
@@ -171,7 +170,6 @@ const useSoporteForm = () => {
       })
     );
     setListaTablaEntrenamientos(datosAmapear);
-    console.log(datosAmapear);
     return false;
   };
 

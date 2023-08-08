@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import useError from '../../../../../hooks/app/useError';
 import useSoporte from '../../../../../hooks/app/useSoporte';
 import useMensaje from '../../../../../hooks/app/useMensaje';
@@ -6,13 +6,14 @@ import useCargando from '../../../../../hooks/app/useCargando';
 import * as servicios from '../servicios/servicios_int';
 import { obtenerClienteLog } from '../../../../../utils/app/func/fun_storage';
 
-const clienteLog = obtenerClienteLog()
+const clienteLog = obtenerClienteLog();
 
 const useInformeSoporte = () => {
   const { empezarCarga, terminarCarga } = useCargando();
   const { errorHttp } = useError();
   const { mensajeSistema } = useMensaje();
   const { listaSoporte, listarSoporteApi } = useSoporte();
+  const [listaLugares, setListaLugares] = useState([]);
   const [datos, setDatos] = useState({
     fechaDesde: new Date(),
     fechaHasta: new Date(),
@@ -40,6 +41,12 @@ const useInformeSoporte = () => {
     setDatos({ ...datos, fechaDesde: e });
     limpiarTabla();
   };
+
+  const cambiarFecha = (e) => {
+    setDatos({ ...datos, fechaHasta: e });
+    limpiarTabla();
+  };
+
   const cambiarFechaHasta = (e) => {
     setDatos({ ...datos, fechaHasta: e });
     limpiarTabla();
@@ -57,6 +64,45 @@ const useInformeSoporte = () => {
     limpiarTabla();
   };
 
+  const cargarListaLugares = () => {
+    servicios.listarLugares().then((r) => {
+      const mapearId = r.items.map((f, i) => ({ ...f, codigo: i + 1 }));
+      console.log("🚀 ~ file: useInformeSoporte.js:64 ~ servicios.listarLugares ~ mapearId:", mapearId)
+
+      setListaLugares(mapearId);
+    });
+  };
+
+  useEffect(() => {
+    cargarListaLugares();
+  }, []);
+
+  const generarHorarioDiarioPorLugar = (nombrelugar, identrenador, fecha) => {
+    function formatTime(hour) {
+      return `${hour.toString().padStart(2, '0')}:00`;
+    }
+    const arregloHoras = Array.from({ length: 11 }, (_, index) => {
+      const horaDesde = index + 8;
+      const horaHasta = index + 9;
+      const fechaDesde = fecha;
+      fechaDesde.setHours(horaDesde, 0, 0);
+      const fechaHasta = fecha;
+      fechaHasta.setHours(horaHasta, 0, 0);
+      const formattedFechaDesde = fechaDesde.toISOString().slice(0, 19).replace('T', ' ');
+      const formattedFechaHasta = fechaHasta.toISOString().slice(0, 19).replace('T', ' ');
+      return {
+        horadesde: formatTime(horaDesde),
+        horahasta: formatTime(horaHasta),
+        fecha: fecha.toISOString().slice(0, 10),
+        nombre: nombrelugar,
+        id: identrenador,
+        fechaDesde: formattedFechaDesde,
+        fechaHasta: formattedFechaHasta,
+      };
+    });
+
+    return arregloHoras;
+  };
   const buscar = () => {
     try {
       if (!datos.esTodo) {
@@ -69,7 +115,7 @@ const useInformeSoporte = () => {
 
       empezarCarga();
       servicios
-        .listar(clienteLog.codigo)
+        .listarLugares()
         .then((res) => {
           if (res.items.length === 0) {
             mensajeSistema({ texto: 'No se encontraron registros con el criterio indicado' });
@@ -111,6 +157,9 @@ const useInformeSoporte = () => {
     cambiarEsTodo,
     buscar,
     nuevo,
+    cambiarFecha,
+    generarHorarioDiarioPorLugar,
+    listaLugares,
   };
 };
 
