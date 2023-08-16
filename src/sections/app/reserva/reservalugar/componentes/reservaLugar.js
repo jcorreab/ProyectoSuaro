@@ -6,24 +6,24 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers';
 import Transicion from '../../../../../components/app/Transicion';
 import SelectorGenerico from '../../../../../components/app/SelectorGenerico';
-import { BotonNuevo, BotonBuscar, BotonGrabar } from '../../../../../components/app/Botones';
-import { estiloTabla, estiloDatagrid } from '../../../../../theme/app/Estilos';
+import { BotonNuevo, BotonBuscar } from '../../../../../components/app/Botones';
+import { estiloTabla, estiloDatagrid} from '../../../../../theme/app/Estilos';
 import { IconoDataGrid } from '../../../../../components/app/IconoDatagrid';
-import useInformeSoporte from '../hooks/useInformeSoporte';
+import useReporteLugar from '../hooks/useReporteLugarComponent';
 
-function InformeSoporteComponent() {
+
+function ReporteLugarComponent() {
   const {
     datos,
     lugar,
-    listaLugares,
+    informe,
     soporteRef,
+    generarHorarioDiarioPorLugar,
     cambiarFecha,
     cambiarLugar,
     nuevo,
-    buscarHorarios,
-    setSeleccionarReserva,
-    grabar,
-  } = useInformeSoporte();
+    listaLugares,
+  } = useReporteLugar();
 
   const cabecera = [
     { field: 'codigo', headerName: 'Codigo ', width: 400, hide: true },
@@ -40,7 +40,30 @@ function InformeSoporteComponent() {
             <Chip label="Reserva Lugar" />
           </Divider>
         </Grid>
-
+        {/* <Grid item md={2} xs={12}>
+          <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
+            <DesktopDatePicker
+              label="Fecha Desde"
+              value={datos.fechaDesde}
+              onChange={(e) => {
+                cambiarFechaDesde(e);
+              }}
+              renderInput={(params) => <TextField {...params} variant="filled" fullWidth />}
+            />
+          </LocalizationProvider>
+        </Grid> */}
+        {/* <Grid item md={2} xs={12}>
+          <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
+            <DesktopDatePicker
+              label="Fecha Hasta"
+              value={datos.fechaHasta}
+              onChange={(e) => {
+                cambiarFechaHasta(e);
+              }}
+              renderInput={(params) => <TextField {...params} variant="filled" fullWidth />}
+            />
+          </LocalizationProvider>
+        </Grid> */}
         <Grid item md={4} xs={12}>
           <SelectorGenerico
             //    desactivarBusqueda={datos.esTodo}
@@ -50,7 +73,7 @@ function InformeSoporteComponent() {
             }}
             tituloTexto="Lugar"
             tituloModal="Lugar"
-            retornarDatos={(e) => cambiarLugar(e)}
+            retornarDatos={((e) => cambiarLugar(e))}
             datos={listaLugares}
           />
         </Grid>
@@ -66,18 +89,22 @@ function InformeSoporteComponent() {
             />
           </LocalizationProvider>
         </Grid>
-
+        {/* <Grid item md={2.5} sm={6} xs={12}>
+          <FormControlLabel
+            control={<Checkbox checked={datos.esTodo} onChange={(e) => cambiarEsTodo(e)} />}
+            label="Ver todos los soportes"
+          />
+        </Grid>
+        <Grid item md={2.5} sm={6} xs={12}>
+          <FormControlLabel
+            control={<Checkbox checked={datos.esSolucion} onChange={(e) => cambiarEsSolucion(e)} />}
+            label="Ver soportes solucionados"
+          />
+        </Grid> */}
         <Grid item md={1.5} xs={6}>
           <BotonBuscar
             propiedades={{
-              onClick: () => buscarHorarios(),
-            }}
-          />
-        </Grid>
-        <Grid item md={2} xs={6}>
-          <BotonGrabar
-            propiedades={{
-              onClick: () => grabar(),
+              onClick: () => generarHorarioDiarioPorLugar(),
             }}
           />
         </Grid>
@@ -105,12 +132,8 @@ function InformeSoporteComponent() {
                   NoRowsOverlay: IconoDataGrid,
                 }}
                 // onRowClick={(e) => obtenerRegistro(e)}
-                onSelectionModelChange={(newSelectionModel) => {
-                  setSeleccionarReserva(newSelectionModel);
-                }}
-                checkboxSelection
                 columns={cabecera}
-                rows={listaLugares}
+                rows={informe}
                 getRowId={(rows) => rows.codigo}
               />
             </div>
@@ -121,4 +144,4 @@ function InformeSoporteComponent() {
   );
 }
 
-export default InformeSoporteComponent;
+export default ReporteLugarComponent;

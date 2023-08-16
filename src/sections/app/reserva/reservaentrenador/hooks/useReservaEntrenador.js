@@ -6,7 +6,7 @@ import useCargando from '../../../../../hooks/app/useCargando';
 import { obtenerClienteLog } from '../../../../../utils/app/func/fun_storage';
 // import * as ServiciosEntrenadores from '../servicios/servicios_int'
 
-const useSoporteForm = () => {
+const useReservaEntrenador = () => {
   const clienteLog = obtenerClienteLog();
   const { empezarCarga, terminarCarga } = useCargando();
   const { errorHttp } = useError();
@@ -195,8 +195,7 @@ const useSoporteForm = () => {
     listaTablaEntrenamientos,
     cambiarFecha,
     setSeleccionarReserva,
-    
   };
 };
 
-export default useSoporteForm;
+export default useReservaEntrenador;

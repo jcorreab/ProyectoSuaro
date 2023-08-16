@@ -5,6 +5,7 @@ import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
 
 // components
+import { useState } from 'react';
 import Iconify from '../components/iconify';
 // sections
 import {
@@ -24,6 +25,15 @@ import {
 export default function DashboardAppPage() {
   const theme = useTheme();
 
+  const [datos, setDatos] = useState({
+    peso: 0.0,
+    altura: 0.0,
+    imc: 0.0,
+    pesooptimo: 0.0,
+  });
+
+  const buscarDatosPersona = () => {};
+
   return (
     <>
       <Helmet>
@@ -37,19 +47,19 @@ export default function DashboardAppPage() {
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Peso Actual" total={120} icon={'mdi:weight-kilogram'} />
+            <AppWidgetSummary title="Peso Actual" total={datos.peso} icon={'mdi:weight-kilogram'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Altura" total={1352831} color="info" icon={'pixelarticons:human-height'} />
+            <AppWidgetSummary title="Altura" total={datos.altura} color="info" icon={'pixelarticons:human-height'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="IMC" total={40633100} color="warning" icon={'game-icons:frozen-body'} />
+            <AppWidgetSummary title="IMC" total={datos.imc} color="warning" icon={'game-icons:frozen-body'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Peso Optimo" total={110} color="error" icon={'mdi:weight-kilogram'} />
+            <AppWidgetSummary title="Peso Optimo" total={datos.pesooptimo} color="error" icon={'mdi:weight-kilogram'} />
           </Grid>
 
           {/* <Grid item xs={12} md={6} lg={8}>

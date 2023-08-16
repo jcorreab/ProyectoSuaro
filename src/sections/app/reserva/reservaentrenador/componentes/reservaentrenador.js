@@ -1,57 +1,86 @@
-// import 'dayjs/locale/es';
-import { Grid, Chip, Divider, Box, TextField } from '@mui/material';
+import 'dayjs/locale/es';
+import { Grid, TextField, Chip, Divider, Box, Button } from '@mui/material';
 import { DataGrid, esES } from '@mui/x-data-grid';
+import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DesktopDatePicker } from '@mui/x-date-pickers';
 import Transicion from '../../../../../components/app/Transicion';
 import SelectorGenerico from '../../../../../components/app/SelectorGenerico';
-import { BotonNuevo, BotonBuscar, BotonGrabar } from '../../../../../components/app/Botones';
+import { BotonGrabar, BotonNuevo, BotonBuscar } from '../../../../../components/app/Botones';
 import { estiloTabla, estiloDatagrid } from '../../../../../theme/app/Estilos';
 import { IconoDataGrid } from '../../../../../components/app/IconoDatagrid';
-import useInformeSoporte from '../hooks/useInformeSoporte';
+import useReservaEntrenador from '../hooks/useReservaEntrenador';
 
-function InformeSoporteComponent() {
+
+function FormularioReservaEntrenadorComponent() {
   const {
     datos,
-    lugar,
-    listaLugares,
+    listaEntrenadores,
     soporteRef,
-    cambiarFecha,
-    cambiarLugar,
-    nuevo,
     buscarHorarios,
-    setSeleccionarReserva,
+    listaTablaEntrenamientos,
+    eliminarSoporteTabla,
+    nuevo,
     grabar,
-  } = useInformeSoporte();
+    entrenador,
+    cambiarEntrenador,
+    cambiarFecha,
+    setSeleccionarReserva,
+  } = useReservaEntrenador();
 
   const cabecera = [
     { field: 'codigo', headerName: 'Codigo ', width: 400, hide: true },
-    { field: 'nombre', headerName: 'Lugar ', width: 400 },
+    { field: 'nombre', headerName: 'Nombre ', width: 400 },
     { field: 'fecha', headerName: 'Fecha', width: 200 },
     { field: 'horadesde', headerName: 'Hora Desde', width: 200 },
     { field: 'horahasta', headerName: 'Hora Hasta', width: 200 },
+
+    {
+      field: 'eliminar',
+      headerName: 'Reservar',
+      width: 150,
+      hide: true,
+      renderCell: (e) => (
+        <Button variant="text" startIcon={<RemoveCircleRoundedIcon />} onClick={() => eliminarSoporteTabla(e)} />
+      ),
+    },
   ];
   return (
     <Transicion>
       <Grid container spacing={1}>
         <Grid item xs={12}>
           <Divider>
-            <Chip label="Reserva Lugar" />
+            <Chip label="Reservar Entrenador" />
           </Divider>
         </Grid>
-
+        <Grid item xs={12} justifyContent="flex-end" container spacing={1}>
+          <Grid item md={2} xs={6}>
+            <BotonNuevo
+              propiedades={{
+                onClick: () => nuevo(),
+              }}
+            />
+          </Grid>
+          <Grid item md={2} xs={6}>
+            <BotonGrabar
+              propiedades={{
+                onClick: () => grabar(),
+              }}
+            />
+          </Grid>
+        </Grid>
         <Grid item md={4} xs={12}>
           <SelectorGenerico
-            //    desactivarBusqueda={datos.esTodo}
             inputRef={soporteRef}
             estadoInicial={{
-              nombre: lugar.nombres,
+              //   codigoalternativo: entrenador.codigoalternativo,
+              nombre: entrenador.nombre,
             }}
-            tituloTexto="Lugar"
-            tituloModal="Lugar"
-            retornarDatos={(e) => cambiarLugar(e)}
-            datos={listaLugares}
+            tituloTexto="Entrenador"
+            tituloModal="Entrenador"
+            retornarDatos={(e) => cambiarEntrenador(e)}
+            datos={listaEntrenadores}
           />
         </Grid>
         <Grid item md={2} xs={6}>
@@ -66,36 +95,16 @@ function InformeSoporteComponent() {
             />
           </LocalizationProvider>
         </Grid>
-
-        <Grid item md={1.5} xs={6}>
+        <Grid item md={1} xs={12}>
           <BotonBuscar
             propiedades={{
               onClick: () => buscarHorarios(),
             }}
           />
         </Grid>
-        <Grid item md={2} xs={6}>
-          <BotonGrabar
-            propiedades={{
-              onClick: () => grabar(),
-            }}
-          />
-        </Grid>
-        <Grid item md={1.5} xs={6}>
-          <BotonNuevo
-            propiedades={{
-              onClick: () => nuevo(),
-            }}
-          />
-        </Grid>
-        {/* <Grid item xs={12}>
-          <Divider>
-            <Chip label="Informe" />
-          </Divider>
-        </Grid> */}
         <Grid item xs={12}>
           <Box sx={estiloTabla}>
-            <div style={{ height: '40vh', width: '100%' }}>
+            <div style={{ height: '30vh', width: '100%' }}>
               <DataGrid
                 density="compact"
                 rowHeight={28}
@@ -104,13 +113,13 @@ function InformeSoporteComponent() {
                 components={{
                   NoRowsOverlay: IconoDataGrid,
                 }}
-                // onRowClick={(e) => obtenerRegistro(e)}
                 onSelectionModelChange={(newSelectionModel) => {
                   setSeleccionarReserva(newSelectionModel);
                 }}
                 checkboxSelection
+                // onRowClick={(e) => obtenerRegistro(e)}
                 columns={cabecera}
-                rows={listaLugares}
+                rows={listaTablaEntrenamientos}
                 getRowId={(rows) => rows.codigo}
               />
             </div>
@@ -121,4 +130,4 @@ function InformeSoporteComponent() {
   );
 }
 
-export default InformeSoporteComponent;
+export default FormularioReservaEntrenadorComponent;

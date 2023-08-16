@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
 import useError from '../../../../../hooks/app/useError';
-import useSoporte from '../../../../../hooks/app/useSoporte';
 import useMensaje from '../../../../../hooks/app/useMensaje';
 import useCargando from '../../../../../hooks/app/useCargando';
 import * as servicios from '../servicios/servicios_int';
@@ -12,17 +11,15 @@ const useInformeSoporte = () => {
   const { empezarCarga, terminarCarga } = useCargando();
   const { errorHttp } = useError();
   const { mensajeSistema } = useMensaje();
-  const { listaSoporte, listarSoporteApi } = useSoporte();
   const [listaLugares, setListaLugares] = useState([]);
+  const [seleccionarReserva, setSeleccionarReserva] = useState([]);
   const [datos, setDatos] = useState({
-    fechaDesde: new Date(),
-    fechaHasta: new Date(),
-    esTodo: true,
-    esSolucion: false,
+    fecha: new Date(),
   });
-  const [soporte, setSoporte] = useState({
+  const [lugar, setLugar] = useState({
+    id: '',
     codigo: '',
-    nombre: '',
+    nombres: '',
   });
   const [informe, setInforme] = useState([]);
 
@@ -31,43 +28,43 @@ const useInformeSoporte = () => {
   const limpiarTabla = () => setInforme([]);
   const limpiarDatosBusqueda = () => {
     setDatos({ fechaDesde: new Date(), fechaHasta: new Date(), esTodo: true });
-    setSoporte({
+    setLugar({
       codigo: '',
-      nombre: '',
+      nombres: '',
     });
   };
+  const buscarHorarios = () => {
+    if (lugar.nombres.length === 0) {
+      mensajeSistema({
+        texto: 'Escoga un entrenador antes de realizar una busqueda',
+        variante: 'warning',
+      });
+      return false;
+    }
 
-  const cambiarFechaDesde = (e) => {
-    setDatos({ ...datos, fechaDesde: e });
-    limpiarTabla();
+    const datosAmapear = generarHorarioDiarioPorLugar(lugar.nombres, lugar.id, datos.fecha).map((f, e) => ({
+      ...f,
+      codigo: e + 1,
+    }));
+    console.log(datosAmapear);
+    setListaLugares(datosAmapear);
+    return false;
   };
 
   const cambiarFecha = (e) => {
-    setDatos({ ...datos, fechaHasta: e });
+    setDatos({ ...datos, fecha: e });
     limpiarTabla();
   };
 
-  const cambiarFechaHasta = (e) => {
-    setDatos({ ...datos, fechaHasta: e });
-    limpiarTabla();
-  };
-  const cambiarSoporte = (e) => {
-    setSoporte(e);
-    limpiarTabla();
-  };
-  const cambiarEsSolucion = (e) => {
-    setDatos({ ...datos, esSolucion: e.target.checked });
-    limpiarTabla();
-  };
-  const cambiarEsTodo = (e) => {
-    setDatos({ ...datos, esTodo: e.target.checked });
+  const cambiarLugar = (e) => {
+    setLugar(e);
     limpiarTabla();
   };
 
   const cargarListaLugares = () => {
     servicios.listarLugares().then((r) => {
-      const mapearId = r.items.map((f, i) => ({ ...f, codigo: i + 1 }));
-      console.log("🚀 ~ file: useInformeSoporte.js:64 ~ servicios.listarLugares ~ mapearId:", mapearId)
+      const mapearId = r.items.map((f, i) => ({ ...f, codigo: i + 1, nombre: f.nombres }));
+      //  console.log('🚀 ~ file: useInformeSoporte.js:64 ~ servicios.listarLugares ~ mapearId:', mapearId);
 
       setListaLugares(mapearId);
     });
@@ -77,7 +74,7 @@ const useInformeSoporte = () => {
     cargarListaLugares();
   }, []);
 
-  const generarHorarioDiarioPorLugar = (nombrelugar, identrenador, fecha) => {
+  const generarHorarioDiarioPorLugar = (nombrelugar, idlugar, fecha) => {
     function formatTime(hour) {
       return `${hour.toString().padStart(2, '0')}:00`;
     }
@@ -95,7 +92,7 @@ const useInformeSoporte = () => {
         horahasta: formatTime(horaHasta),
         fecha: fecha.toISOString().slice(0, 10),
         nombre: nombrelugar,
-        id: identrenador,
+        id: idlugar,
         fechaDesde: formattedFechaDesde,
         fechaHasta: formattedFechaHasta,
       };
@@ -103,63 +100,63 @@ const useInformeSoporte = () => {
 
     return arregloHoras;
   };
-  const buscar = () => {
+  const grabar = async () => {
     try {
-      if (!datos.esTodo) {
-        if (soporte.codigo.trim().length === 0) {
-          mensajeSistema({ texto: 'El soporte es requerido' });
-          soporteRef.current.focus();
-          return;
-        }
+      if (listaLugares.length === 0) {
+        mensajeSistema({ texto: 'No hay ningun entrenamiento seleccionado' });
+        soporteRef.current.focus();
+        return;
       }
+      const listardatosActual = seleccionarReserva.map((p) => listaLugares.find((f) => f.codigo === p));
 
+      const DatosAGrabar = listardatosActual.map((f) => ({
+        persona: clienteLog.correo,
+        fecha: f.fecha,
+        lugar: '',
+        entrenador: f.id,
+        estado: true,
+        horadesde: f.fechaDesde,
+        horahasta: f.fechaHasta,
+      }));
+      console.log(DatosAGrabar);
       empezarCarga();
-      servicios
-        .listarLugares()
-        .then((res) => {
-          if (res.items.length === 0) {
-            mensajeSistema({ texto: 'No se encontraron registros con el criterio indicado' });
-            return;
-          }
-          if (datos.esTodo) {
-            setInforme(res.items);
-            return;
-          }
-          const resApi = res.items.filter((f) => f.id_soporte === soporte.codigo && f.estado === datos.esSolucion);
-          if (resApi.length === 0) {
-            mensajeSistema({ texto: 'No se encontraron registros con el criterio indicado' });
-            return;
-          }
-          setInforme(resApi);
-        })
-        .catch((error) => errorHttp({ error: error.code, mensaje: 'Error al buscar la informacion' }))
-        .finally(() => terminarCarga());
+
+      DatosAGrabar.forEach(async (f) => {
+        await servicios.grabar({
+          f,
+        });
+      });
+
+      mensajeSistema({
+        texto: 'Sus Reseravas fueron Realizadas con exito',
+        variante: 'success',
+      });
+      nuevo();
     } catch (error) {
-      //
+      errorHttp({ error: error.code, mensaje: 'Error al momento de grabar la reservacion' });
+    } finally {
+      terminarCarga();
     }
   };
+
   const nuevo = () => {
     limpiarTabla();
     limpiarDatosBusqueda();
-    listarSoporteApi();
   };
 
   return {
     datos,
-    soporte,
+    cambiarLugar,
     informe,
-    listaSoporte,
     soporteRef,
-    cambiarFechaDesde,
-    cambiarFechaHasta,
-    cambiarSoporte,
-    cambiarEsSolucion,
-    cambiarEsTodo,
-    buscar,
+    lugar,
+    buscarHorarios,
     nuevo,
     cambiarFecha,
     generarHorarioDiarioPorLugar,
     listaLugares,
+    setSeleccionarReserva,
+    grabar,
   };
 };
 
