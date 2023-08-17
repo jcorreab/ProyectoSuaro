@@ -13,3 +13,8 @@ export const obtenerUsuarios = async ({ codigo }) => {
   const res = await axiosMain.get(`/collections/persona/records/${codigo}`);
   return res.data;
 };
+
+export const datosTiempoUsuario = async () => {
+  const res = await axiosMain.get(`/collections/asistencia/records`);
+  return res.data.items;
+};

@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 // import { faker } from '@faker-js/faker';
 // @mui
-import { useTheme } from '@mui/material/styles';
+// import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
 import { useState, useEffect } from 'react';
 import useMensaje from '../hooks/app/useMensaje';
@@ -57,8 +57,54 @@ export default function DashboardAppPage() {
       }
     });
   };
+
+  const [datosDiarios, setDatosDiarios] = useState({
+    lunes: 0,
+    martes: 0,
+    miercoles: 0,
+    jueves: 0,
+    viernes: 0,
+    sabado: 0,
+    domingo: 0,
+  });
+
+  const obtenerDatosSemanales = () => {
+    services.datosTiempoUsuario().then((r) => {
+      const filtrarPersona = r.filter((f) => f.persona === clienteLog.codigo);
+      const hoy = new Date();
+      const diaActual = hoy.getDate();
+      const primerDiaSemana = new Date(hoy.getFullYear(), hoy.getMonth(), diaActual - hoy.getDay(), 0, 0, 0);
+      const ultimoDiaSemana = new Date(hoy.getFullYear(), hoy.getMonth(), diaActual + (6 - hoy.getDay()), 23, 59, 59);
+
+      const arregloF = filtrarPersona.filter((objeto) => {
+        const fechaObjeto = new Date(objeto.created);
+        return fechaObjeto >= primerDiaSemana && fechaObjeto <= ultimoDiaSemana;
+      });
+      const datosPrueba = {
+        lunes: 0,
+        martes: 0,
+        miercoles: 0,
+        jueves: 0,
+        viernes: 0,
+        sabado: 0,
+        domingo: 0,
+      };
+      arregloF.forEach((objeto) => {
+        const fechaIngreso = new Date(objeto.fecha_ingreso);
+        const diaSemana = fechaIngreso.getDay(); // 0: Domingo, 1: Lunes, ..., 6: Sábado
+        const diaSemanaTexto = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'][diaSemana];
+
+        datosPrueba[diaSemanaTexto] += 1;
+      });
+   //   console.log(datosPrueba);
+      setDatosDiarios(datosPrueba);
+    });
+  };
+
   useEffect(() => {
     buscarDatosPersona();
+    obtenerDatosSemanales();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -153,13 +199,13 @@ export default function DashboardAppPage() {
               //   subheader="(+43%) than last year"
 
               chartData={[
-                { label: 'Lunes', value: 0 },
-                { label: 'Martes', value: 1 },
-                { label: 'Miercoles', value: 0 },
-                { label: 'Jueves', value: 1 },
-                { label: 'Viernes', value: 0 },
-                { label: 'Sabado', value: 1 },
-                { label: 'Domingo', value: 0 },
+                { label: 'Lunes', value: datosDiarios.lunes },
+                { label: 'Martes', value: datosDiarios.martes },
+                { label: 'Miercoles', value: datosDiarios.miercoles },
+                { label: 'Jueves', value: datosDiarios.jueves },
+                { label: 'Viernes', value: datosDiarios.viernes },
+                { label: 'Sabado', value: datosDiarios.sabado },
+                { label: 'Domingo', value: datosDiarios.domingo },
               ]}
             />
           </Grid>
