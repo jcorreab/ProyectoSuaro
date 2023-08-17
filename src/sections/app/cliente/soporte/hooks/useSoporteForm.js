@@ -83,7 +83,7 @@ const useSoporteForm = () => {
       const listardatosActual = seleccionarReserva.map((p) => listaTablaEntrenamientos.find((f) => f.codigo === p));
 
       const DatosAGrabar = listardatosActual.map((f) => ({
-        persona: clienteLog.correo,
+        persona: clienteLog.codigo,
         fecha: f.fecha,
         lugar: '',
         entrenador: f.id,
@@ -93,16 +93,23 @@ const useSoporteForm = () => {
       }));
       console.log(DatosAGrabar);
       empezarCarga();
-      // const datosEnvio = {
-      //   fecha_registro: datos.fecha,
-      //   cliente: clienteLog.codigo,
-      //   estado: false,
-      // };
-      // const soporteApi = await servicio.grabar(datosEnvio);
+
       DatosAGrabar.forEach(async (f) => {
-        await servicio.grabar({
-          f,
-        });
+        const DatosAGrabar = {
+          id: '',
+          collectionId: 'gg4vsi05gbh8nmg',
+          collectionName: 'reservar',
+          created: '2022-01-01 01:00:00.123Z',
+          updated: '2022-01-01 23:59:59.456Z',
+          persona: f.persona,
+          fecha: f.fecha,
+          lugar: f.lugar,
+          entrenador: f.entrenador,
+          estado: true,
+          horadesde: f.horadesde,
+          horahasta: f.horahasta,
+        };
+        await servicio.grabar(DatosAGrabar);
       });
 
       mensajeSistema({
@@ -195,7 +202,6 @@ const useSoporteForm = () => {
     listaTablaEntrenamientos,
     cambiarFecha,
     setSeleccionarReserva,
-    
   };
 };
 

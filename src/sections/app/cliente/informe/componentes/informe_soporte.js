@@ -20,6 +20,7 @@ function InformeSoporteComponent() {
     cambiarFecha,
     cambiarLugar,
     nuevo,
+    listaTablaLugares,
     buscarHorarios,
     setSeleccionarReserva,
     grabar,
@@ -110,7 +111,7 @@ function InformeSoporteComponent() {
                 }}
                 checkboxSelection
                 columns={cabecera}
-                rows={listaLugares}
+                rows={listaTablaLugares}
                 getRowId={(rows) => rows.codigo}
               />
             </div>

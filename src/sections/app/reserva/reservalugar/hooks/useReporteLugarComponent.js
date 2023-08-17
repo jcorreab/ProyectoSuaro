@@ -62,8 +62,7 @@ const useReporteLugar = () => {
   const cargarListaLugares = () => {
     servicios.listarLugares().then((r) => {
       const mapearId = r.items.map((f, i) => ({ ...f, codigo: i + 1 }));
-      console.log('🚀 ~ file: useInformeSoporte.js:64 ~ servicios.listarLugares ~ mapearId:', mapearId);
-
+     // console.log('🚀 ~ file: useInformeSoporte.js:64 ~ servicios.listarLugares ~ mapearId:', mapearId);
       setListaLugares(mapearId);
     });
   };

@@ -1,30 +1,34 @@
 import { Helmet } from 'react-helmet-async';
-import { faker } from '@faker-js/faker';
+// import { faker } from '@faker-js/faker';
 // @mui
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
-
+import { useState, useEffect } from 'react';
+import useMensaje from '../hooks/app/useMensaje';
 // components
-import { useState } from 'react';
-import Iconify from '../components/iconify';
+// import Iconify from '../components/iconify';
 // sections
+
 import {
-  // AppTasks,
-  AppNewsUpdate,
-  AppOrderTimeline,
-  AppCurrentVisits,
-  AppWebsiteVisits,
-  AppTrafficBySite,
+  // // AppTasks,
+  // AppNewsUpdate,
+  // AppOrderTimeline,
+  // AppCurrentVisits,
+  // AppWebsiteVisits,
+  // AppTrafficBySite,
   AppWidgetSummary,
-  AppCurrentSubject,
+  // AppCurrentSubject,
   AppConversionRates,
 } from '../sections/@dashboard/app';
+import { obtenerClienteLog } from '../utils/app/func/fun_storage';
+import * as services from '../servicios/servicios_soporte';
 
 // ----------------------------------------------------------------------
 
 export default function DashboardAppPage() {
-  const theme = useTheme();
-
+  // const theme = useTheme();
+  const clienteLog = obtenerClienteLog();
+  const { mensajeSistema } = useMensaje();
   const [datos, setDatos] = useState({
     peso: 0.0,
     altura: 0.0,
@@ -32,7 +36,30 @@ export default function DashboardAppPage() {
     pesooptimo: 0.0,
   });
 
-  const buscarDatosPersona = () => {};
+  const buscarDatosPersona = () => {
+    services.obtenerUsuarios({ codigo: clienteLog.codigo }).then((r) => {
+      setDatos({
+        peso: parseFloat(r.peso),
+        altura: parseFloat(r.altura),
+        imc: parseFloat(r.peso) / (((parseFloat(r.altura) / 100) * parseFloat(r.altura)) / 100),
+        pesooptimo: parseFloat(r.peso),
+      });
+      if (r.peso >= 90) {
+        mensajeSistema({
+          texto: 'Se recomienda entrenamiento de peso',
+          variante: 'success',
+        });
+      } else {
+        mensajeSistema({
+          texto: 'Se recomienda un entrenamiento de cardio',
+          variante: 'success',
+        });
+      }
+    });
+  };
+  useEffect(() => {
+    buscarDatosPersona();
+  }, []);
 
   return (
     <>

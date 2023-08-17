@@ -33,7 +33,7 @@ const useReservaEntrenador = () => {
   const soporteRef = useRef();
   const detalleRef = useRef();
 
-  const [listaSoporteTabla, setListaSoporteTabla] = useState([]);
+
   const [listaTablaEntrenamientos, setListaTablaEntrenamientos] = useState([]);
 
   const limpiarDatosEntrenador = () => {
@@ -61,11 +61,7 @@ const useReservaEntrenador = () => {
     });
   };
 
-  const eliminarSoporteTabla = (e) => {
-    const nuevaLista = listaSoporteTabla.filter((f) => f.codigo !== e.id);
-    setListaSoporteTabla(nuevaLista);
-  };
-
+ 
   const nuevo = () => {
     setListaTablaEntrenamientos([]);
     limpiarDatosEntrenador();
@@ -182,10 +178,8 @@ const useReservaEntrenador = () => {
     soporte,
     soporteRef,
     detalleRef,
-    listaSoporteTabla,
     cambiarSoporte,
     cambiarDetalle,
-    eliminarSoporteTabla,
     nuevo,
     grabar,
     listaEntrenadores,

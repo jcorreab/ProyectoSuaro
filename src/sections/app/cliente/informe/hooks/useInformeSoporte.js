@@ -12,6 +12,7 @@ const useInformeSoporte = () => {
   const { errorHttp } = useError();
   const { mensajeSistema } = useMensaje();
   const [listaLugares, setListaLugares] = useState([]);
+  const [listaTablaLugares, setListaTablaLugares] = useState([]);
   const [seleccionarReserva, setSeleccionarReserva] = useState([]);
   const [datos, setDatos] = useState({
     fecha: new Date(),
@@ -21,11 +22,10 @@ const useInformeSoporte = () => {
     codigo: '',
     nombres: '',
   });
-  const [informe, setInforme] = useState([]);
 
   const soporteRef = useRef();
 
-  const limpiarTabla = () => setInforme([]);
+  const limpiarTabla = () => setListaTablaLugares([]);
   const limpiarDatosBusqueda = () => {
     setDatos({ fechaDesde: new Date(), fechaHasta: new Date(), esTodo: true });
     setLugar({
@@ -46,8 +46,8 @@ const useInformeSoporte = () => {
       ...f,
       codigo: e + 1,
     }));
-    console.log(datosAmapear);
-    setListaLugares(datosAmapear);
+    //  console.log(datosAmapear);
+    setListaTablaLugares(datosAmapear);
     return false;
   };
 
@@ -64,8 +64,6 @@ const useInformeSoporte = () => {
   const cargarListaLugares = () => {
     servicios.listarLugares().then((r) => {
       const mapearId = r.items.map((f, i) => ({ ...f, codigo: i + 1, nombre: f.nombres }));
-      //  console.log('🚀 ~ file: useInformeSoporte.js:64 ~ servicios.listarLugares ~ mapearId:', mapearId);
-
       setListaLugares(mapearId);
     });
   };
@@ -107,13 +105,13 @@ const useInformeSoporte = () => {
         soporteRef.current.focus();
         return;
       }
-      const listardatosActual = seleccionarReserva.map((p) => listaLugares.find((f) => f.codigo === p));
+      const listardatosActual = seleccionarReserva.map((p) => listaTablaLugares.find((f) => f.codigo === p));
 
       const DatosAGrabar = listardatosActual.map((f) => ({
-        persona: clienteLog.correo,
+        persona: clienteLog.codigo,
         fecha: f.fecha,
-        lugar: '',
-        entrenador: f.id,
+        lugar: f.id,
+        entrenador: '',
         estado: true,
         horadesde: f.fechaDesde,
         horahasta: f.fechaHasta,
@@ -122,9 +120,21 @@ const useInformeSoporte = () => {
       empezarCarga();
 
       DatosAGrabar.forEach(async (f) => {
-        await servicios.grabar({
-          f,
-        });
+        const DatosAGrabar = {
+          id: '',
+          collectionId: 'gg4vsi05gbh8nmg',
+          collectionName: 'reservar',
+          created: '2022-01-01 01:00:00.123Z',
+          updated: '2022-01-01 23:59:59.456Z',
+          persona: f.persona,
+          fecha: f.fecha,
+          lugar: f.lugar,
+          entrenador: f.entrenador,
+          estado: true,
+          horadesde: f.horadesde,
+          horahasta: f.horahasta,
+        };
+        await servicios.grabar(DatosAGrabar);
       });
 
       mensajeSistema({
@@ -133,6 +143,7 @@ const useInformeSoporte = () => {
       });
       nuevo();
     } catch (error) {
+      console.log('🚀 ~ file: useInformeSoporte.js:146 ~ grabar ~ error:', error);
       errorHttp({ error: error.code, mensaje: 'Error al momento de grabar la reservacion' });
     } finally {
       terminarCarga();
@@ -140,6 +151,11 @@ const useInformeSoporte = () => {
   };
 
   const nuevo = () => {
+    setLugar({
+      id: '',
+      codigo: '',
+      nombres: '',
+    });
     limpiarTabla();
     limpiarDatosBusqueda();
   };
@@ -147,7 +163,7 @@ const useInformeSoporte = () => {
   return {
     datos,
     cambiarLugar,
-    informe,
+    listaTablaLugares,
     soporteRef,
     lugar,
     buscarHorarios,
